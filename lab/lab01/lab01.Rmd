@@ -11,21 +11,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Welcome!
 
-Welcome to Data 8: *Foundations of Data Science*! Each week you will complete a lab assignment like this one. You can't learn technical subjects without hands-on practice, so labs are an important part of the course.
+Welcome to DATA1517 Each week you will complete a lab assignment like this one. You can't learn technical subjects without hands-on practice, so labs are an important part of the course.
 
 Before we get started, there are some administrative details.
 
-The weekly lab sessions are designed to develop your skills with computational and inferential concepts. These lab assignments are a required part of the course and will be released on Wednesday, and due Friday at 5 PM
+The weekly lab sessions are designed to develop your skills with computational and inferential concepts. These lab assignments are a required part of the course and will be released every Monday and due next Monday at 5 PM.
 
 Lab sessions are not webcast! Here are the policies for getting full credit (Lab is worth 10% of your final grade):
 
-1. If you are within regular lab, to receive credit for lab you must attend the full discussion portion (first hour) at which point the GSI will take attendance. You must also submit the lab notebook to Gradescope with significant progress by Friday 5pm for full lab credit.
+1. If you are within regular lab, to receive credit for lab you must attend. 
 
-2. If you are within the self-service lab (check the [course policies](https://www.data8.org/sp24/policies/#labs) for details) you will have the option to complete the lab on your own and submit the completed lab by 5 PM on the due date.
+2. If you are within the self-service lab you will have the option to complete the lab on your own and submit the completed lab by 5 PM on the due date.
 
 Collaborating on labs is more than okay -- it's encouraged! You should rarely remain stuck for more than a few minutes on questions in labs, so ask an instructor or classmate for help. (Explaining things is beneficial, too -- the best way to solidify your knowledge of a subject is to explain it.) Please don't just share answers, though.
 
-You can read more of the [course policies](http://data8.org/sp24/policies) on the [course website](http://data8.org/sp24/).
 
 #### Today's lab
 
@@ -37,16 +36,6 @@ In today's lab, you'll learn how to:
 4. break down R code into smaller parts to understand it.
 
 This lab covers parts of [Chapter 3](http://www.inferentialthinking.com/chapters/03/programming-in-python.html) of the online textbook, adapted for R. You should read the examples in the book, but not right now. Instead, let's get started!
-
-# 0. Mandatory Policies Form
-
-Reading the text above this will save you time!
-
-Fill out [this](https://docs.google.com/forms/d/e/1FAIpQLSfwVep0fIDsryCzZnBcRAPmak03VUNoT9jlOYDk60UHprCC6g/viewform?usp=sf_link) form before moving on. Please use your Berkeley email to access the form. At the end of the form, there will be a secret word that you should input into the box below. Remember to put the secret word in quotes when inputting it (i.e."hello"). The quotation marks indicate that it is a String type!
-
-```{r}
-secret_word <- "..."  # Replace ... with the secret word in quotes
-```
 
 # 1. R Markdown Documents
 
@@ -64,7 +53,7 @@ After you edit text, you can knit the document to see the changes. (Try not to d
 
 Other sections contain code in the R language. Running a code chunk will execute all of the code it contains.
 
-To run the code in a code chunk, click the green "play" button in the top right of the chunk, or place your cursor in the chunk and press Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac).
+To run the code in a code chunk, click the green "Run Chunk" button in the top right of the chunk, or place your cursor in the chunk and press Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac).
 
 Try running this chunk:
 
@@ -97,7 +86,8 @@ print("and then this one.")
 
 You can use R Markdown documents for your own projects or documents. When you make your own document, you'll need to create your own chunks for text and code.
 
-To add a code chunk, you can use the Insert menu or press Ctrl+Alt+I (Cmd+Option+I on Mac).
+To add a code chunk, you can use the Insert menu or press Ctrl+Alt+I (Cmd+Option+I on Mac), or manually add it by typing ```{r} and ```.
+
 
 **Question 1.3.1.** Add a code chunk below this section. Write code in it that prints out:
    
@@ -139,7 +129,9 @@ If you run into problems where your code isn't working as expected, try restarti
 
 ## 1.6. Submitting Your Work
 
-All assignments in the course will be distributed as R Markdown documents like this one, and you will submit your work by knitting the document to HTML and submitting both the .Rmd and .html files.
+All labs in the course will be distributed as R Markdown documents like this one, and you will submit your work by 
+1. knitting the document to HTML and submitting both the .Rmd and .html files.
+2. uploading the .Rmd file to Brightspace.
 
 # 2. Numbers
 
@@ -191,15 +183,15 @@ $$6 + (6 \times 5 - (6 \times 3))^2 \times \left(\frac{\left(2^3\right)}{4} \tim
 
 **Question 2.1.1.** Write an R expression in this next chunk that's equal to $\displaystyle 5 \times \left(3 \frac{10}{11}\right) - 50 \frac{1}{3} + 2^{0.5 \times 22} - \frac{7}{33} + 7$. That's five times three and ten elevenths, minus fifty and a third, plus two to the power of half twenty-two, minus seven thirty-thirds plus seven.
 
-Replace the ellipses (`...`) with your expression. Try to use parentheses only when necessary.
+Replace the ellipses (`""`) with your expression. Try to use parentheses only when necessary.
 
 **Note:** By "$\displaystyle 3 \frac{10}{11}$", we mean $\displaystyle 3+\frac{10}{11}$, not $\displaystyle 3 \times \frac{10}{11}$.
 
 *Hint:* The correct output should start with a familiar number.
 
 ```{r}
-# Replace ... with your expression
-...
+# Replace "" with your expression
+""
 ```
 
 # 3. Names (Variables)
@@ -278,7 +270,7 @@ Now that you know how to name things, you can start checking whether your work i
 # so that it computes the number of seconds in a decade 
 # and assigns that number the name, seconds_in_a_decade.
 
-seconds_in_a_decade <- ...  # Replace ... with your calculation
+seconds_in_a_decade <- ""  # Replace "" with your calculation
 
 # We've put this line in this chunk 
 # so that it will print the value you've given to seconds_in_a_decade when you run it.  
@@ -329,11 +321,11 @@ Someone studied the video and estimated that the hammer was dropped 113 cm from 
 ```{r}
 # t, the duration of the fall in the experiment, in seconds.
 # Fill this in.
-time <- ...
+time <- ""
 
 # The estimated distance the hammer actually fell, in meters.
 # Fill this in (remember to convert from cm to meters).
-estimated_distance_m <- ...
+estimated_distance_m <- ""
 ```
 
 **Question 3.3.2.** Now, complete the code in the next chunk to compute the difference between the predicted and estimated distances (in meters) that the hammer fell in this experiment.
@@ -361,7 +353,8 @@ moon_radius_m <- 1.737 * 10^6
 # The text above describes the formula
 # for this distance given by Newton's law.
 # **YOU FILL THIS PART IN.**
-predicted_distance_m <- ...
+predicted_distance_m <- 0
+estimated_distance_m <- 0
 
 # Here we've computed the difference 
 # between the predicted fall distance and the distance we actually measured.
@@ -394,14 +387,14 @@ Chunhua also knows that blocks in Manhattan are all about 80m by 274m (avenues a
 
 ![Map](map.jpg)
 
-**Question 4.1.1.** Fill in the line `num_avenues_away <- ...` in the next chunk so that the chunk calculates the distance Chunhua must walk and gives it the name `manhattan_distance`. Everything else has been filled in for you. **Use the `abs` function.**
+**Question 4.1.1.** Fill in the line `num_avenues_away <- ""` in the next chunk so that the chunk calculates the distance Chunhua must walk and gives it the name `manhattan_distance`. Everything else has been filled in for you. **Use the `abs` function.**
 
 ```{r}
 # Here's the number of streets away:
 num_streets_away <- abs(42-34)
 
 # Compute the number of avenues away in a similar way:
-num_avenues_away <- ...
+num_avenues_away <- 0
 
 street_length_m <- 80
 avenue_length_m <- 274
@@ -460,10 +453,10 @@ In fact, that's basically what R does to compute the value of the expression.
 **Question 5.1.** Say that Genghis's length is 16.7 inches. In the next chunk, use `abs` to compute the absolute value of the difference between Genghis's length and the average cat length. Give that value the name `genghis_distance_from_average_in`.
 
 ```{r}
-# Replace the ... with an expression 
+# Replace the "" with an expression 
 # to compute the absolute value 
 # of the difference between Genghis's length (16.7 in) and the average cat length.
-genghis_distance_from_average_in <- ...
+genghis_distance_from_average_in <- ""
 
 # Again, we've written this here 
 # so that the distance you compute will get printed 
@@ -518,7 +511,7 @@ zeepty <- 15.8  # Zeepty is 15.8 inches long
 # If you're stuck, try computing the value for each step of the process 
 # (like the difference between Hummus's length and Gatkes's length) 
 # on a separate line and giving it a name (like hummus_gatkes_length_diff)
-min_length_difference <- ...
+min_length_difference <- ""
 ```
 
 You're done with Lab 1!

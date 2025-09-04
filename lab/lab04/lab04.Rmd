@@ -1,0 +1,636 @@
+---
+title: "Lab 4: Functions and Visualizations"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Lab 4: Functions and Visualizations
+
+Welcome to Lab 4! This week, we'll learn about functions, data manipulation methods such as `apply`, and how to generate visualizations!
+
+Recommended Reading:
+
+* [R for Data Science - Functions](https://r4ds.had.co.nz/functions.html)
+* [R for Data Science - Data Visualization](https://r4ds.had.co.nz/data-visualisation.html)
+
+
+```{r libraries}
+# Load required libraries
+library(ggplot2)  # For plotting
+library(dplyr)    # For data manipulation (if available)
+# We'll use base R for most operations to maintain compatibility
+```
+
+## 1. Defining functions
+
+Let's start off by writing a function that converts a proportion to a percentage by multiplying it by 100. For example, the value of `to_percentage(.5)` should be the number 50 (no percent sign).
+
+A function definition has a few parts.
+
+##### Function keyword
+We create a function with the assignment operator `<-` and the `function` keyword:
+
+```r
+function_name <- function()
+```
+
+##### Name
+Next comes the name of the function. Like other names we've defined, it can't start with a number or contain spaces. Let's call our function `to_percentage`:
+
+```r
+to_percentage <- function()
+```
+
+##### Arguments
+Next comes the **arguments** of the function. This tells R the number of **arguments** in the function and the names of those arguments. An argument is a value that is _passed into_ the function when it is called. A function can have any number of arguments (including 0!).
+
+`to_percentage` should take one argument, and we'll call that argument `proportion` since it should be a proportion.
+
+```r
+to_percentage <- function(proportion)
+```
+
+If we want our function to take more than one argument, we add a comma between each argument name i.e `to_percentage(proportion, decimals)`. Note that if we had zero arguments, we'd still place the parentheses `()` after the function keyword.
+
+##### Documentation
+Functions can do complicated things, so you should write an explanation of what your function does. For small functions, this is less important, but it's a good habit to learn from the start. In R, we can add comments using `#`:
+
+```r
+to_percentage <- function(proportion) {
+  # Converts a proportion to a percentage
+}
+```
+
+##### Body
+Now we start writing code that runs when the function is called. This is called the *body* of the function and is enclosed in curly braces `{}`.
+
+Some notes about the body of the function:
+- We can write code that we would write anywhere else.
+- We use the arguments defined in the function signature. We can do this because values are assigned to those arguments when we call the function.
+- We generally avoid referencing variables defined *outside* the function. If you would like to reference variables outside of the function, pass them through as arguments!
+
+Now, let's give a name to the number we multiply a proportion by to get a percentage:
+
+```r
+to_percentage <- function(proportion) {
+  # Converts a proportion to a percentage
+  factor <- 100
+}
+```
+
+##### `return`
+The special instruction `return` is part of the function's body and tells R to make the value of the function call equal to whatever comes right after `return`. We want the value of `to_percentage(.5)` to be the proportion .5 times the factor 100, so we write:
+
+```r
+to_percentage <- function(proportion) {
+  # Converts a proportion to a percentage
+  factor <- 100
+  return(proportion * factor)
+}
+```
+
+`return` only makes sense in the context of a function, and **can never be used outside of a function**. `return` is always the last line of the function because R stops executing the body of a function once it hits a `return` statement. In R, if you don't explicitly use `return`, the function will return the last evaluated expression.
+
+*Note:* `return` inside a function tells R what value the function evaluates to. However, there are other functions, like `cat` or `print`, that have no `return` value. For example, `cat` simply prints a certain value out to the console.
+
+In short, `return` is used when you want to tell the *computer* what the value of some variable is, while `cat` is used to tell you, a *human*, its value.
+
+**Question 1.1.** Define `to_percentage` in the cell below. Call your function to convert the proportion .2 to a percentage. Name that percentage `twenty_percent`.
+
+```{r q11}
+to_percentage <- function(proportion) {
+  # Converts a proportion to a percentage
+}
+
+twenty_percent <- to_percentage(0.2)
+twenty_percent
+```
+
+```{r q11_test}
+# Test: Check the function works correctly
+if (to_percentage(0.35) == 35.0 && twenty_percent == 20.0) {
+  cat("✓ Test passed: to_percentage function works correctly")
+} else {
+  stop("Test failed: Check your function definition")
+}
+```
+
+Here's something important about functions: **the names assigned *within* a function body are only accessible within the function body**. Once the function has returned, those names are gone. So even if you created a variable called `factor` and defined `factor <- 100` inside of the body of the `to_percentage` function and then called `to_percentage`, `factor` would not have a value assigned to it outside of the body of `to_percentage`:
+
+**Note**: Below, you should see an error message indicating that the object 'to_factor' is not found. R throws this error because `to_factor` has not been defined outside of the body of the `to_percentage` function.
+
+```{r factor_error, error=TRUE}
+# You should get an error when you run this. (If you don't, 
+# you might have defined to_factor somewhere above.)
+to_factor
+```
+
+Like you've done with built-in functions in previous labs (max, abs, etc.), you can pass in named values as arguments to your function.
+
+**Question 1.2.** Use `to_percentage` again to convert the proportion named `a_proportion` (defined below) to a percentage called `a_percentage`.
+
+*Note:* You don't need to define `to_percentage` again! Like other named values, functions stick around after you define them.
+
+```{r q12}
+a_proportion <- 2^(0.5) / 2
+a_percentage <- 0
+```
+
+```{r q12_test}
+# Test: Check the calculation
+expected_value <- 70.71067811865476
+if (abs(a_percentage - expected_value) < 0.0001) {
+  cat("✓ Test passed: a_percentage =", a_percentage)
+} else {
+  stop("Test failed: a_percentage =", a_percentage)
+}
+```
+
+In the following cell, we will define a function called `disemvowel`. It takes in a single string as its argument. It returns a copy of that string, but with all the characters that are vowels removed. (In English, the vowels are the characters "a", "e", "i", "o", and "u".)
+
+To remove all the "a"s from a string, we use `gsub("a", "", a_string)`. The `gsub` function for strings returns a new string, so we can call `gsub` multiple times, one after the other.
+
+```{r disemvowel_function}
+disemvowel <- function(a_string) {
+  # Removes all vowels from a string
+  result <- gsub("a", "", a_string)
+  result <- gsub("e", "", result)
+  result <- gsub("i", "", result)
+  result <- gsub("o", "", result)
+  result <- gsub("u", "", result)
+  return(result)
+}
+
+# An example call to the function. (It's often helpful to run
+# an example call from time to time while we're writing a function,
+# to see how it currently works.)
+disemvowel("Can you read this without vowels?")
+```
+
+##### Calls on calls on calls
+Just as you write a series of lines to build up a complex computation, it's useful to define a series of small functions that build on each other. Since you can write any code inside a function's body, you can call other functions you've written.
+
+If a function is like a recipe, defining a function in terms of other functions is like having a recipe for cake telling you to follow another recipe to make the frosting, and another to make the jam filling. This makes the cake recipe shorter and clearer, and it avoids having a bunch of duplicated frosting recipes. It's a foundation of productive programming.
+
+For example, suppose you want to count the number of characters *that aren't vowels* in a piece of text. One way to do this is to remove all the vowels and count the size of the remaining string.
+
+**Question 1.3.** Write a function called `num_non_vowels`. It should take a string as its argument and return a number. That number should be the number of characters in the argument string that aren't vowels. You should use the `disemvowel` function we provided above inside of the `num_non_vowels` function.
+
+*Hint:* The function `nchar` takes a string as its argument and returns the number of characters in it.
+
+```{r q13}
+num_non_vowels <- function(a_string) {
+  # The number of characters in a string, minus the vowels
+}
+
+# Try calling your function yourself to make sure the output is what
+# you expect
+num_non_vowels("Go bears!")
+```
+
+```{r q13_test}
+# Test: Check the function works correctly
+if (num_non_vowels("Go bears!") == 6) {
+  cat("✓ Test passed: num_non_vowels function works correctly")
+} else {
+  stop("Test failed: Check your function definition")
+}
+```
+
+Functions can also encapsulate code that *displays output* instead of computing a value. For example, if you call `cat` inside a function, and then call that function, something will get printed.
+
+The `movies_by_year` dataset in the textbook has information about movie sales in recent years. Suppose you'd like to display the year with the 5th-highest total gross movie sales, printed within a sentence. You might do this:
+
+```{r movies_example}
+movies_by_year <- read.csv("movies_by_year.csv")
+rank <- 5
+movies_sorted <- movies_by_year[order(movies_by_year$Total.Gross, decreasing = TRUE), ]
+fifth_from_top_movie_year <- movies_sorted$Year[rank]
+cat("Year number", rank, "for total gross movie sales was:", fifth_from_top_movie_year, "\n")
+```
+
+After writing this, you realize you also wanted to print out the 2nd and 3rd-highest years. Instead of copying your code, you decide to put it in a function. Since the rank varies, you make that an argument to your function.
+
+**Question 1.4.** Write a function called `print_kth_top_movie_year`. It should take a single argument, the rank of the year (like 2, 3, or 5 in the above examples) and should use the data frame `movies_by_year`. It should print out a message like the one above.
+
+*Note:* Your function shouldn't have a `return` statement.
+
+```{r q14}
+print_kth_top_movie_year <- function(k) {
+ 
+}
+
+# Example calls to your function:
+print_kth_top_movie_year(2)
+print_kth_top_movie_year(3)
+```
+
+```{r q14_test}
+# Test: Check the function output for rank 4
+# Capture output to test
+output <- capture.output(print_kth_top_movie_year(4))
+expected_output <- "Year number 4 for total gross movie sales was: 2009"
+if (grepl("Year number 4.*2009", output)) {
+  cat("✓ Test passed: print_kth_top_movie_year function works correctly")
+} else {
+  cat("Test result:", output, "\n")
+  stop("Test failed: Check your function output")
+}
+```
+
+### `cat` is not the same as `return`
+The `print_kth_top_movie_year(k)` function prints the total gross movie sales for the year that was provided! However, since we did not return any value in this function, we cannot use it after we call it. Let's look at an example of another function that prints a value but does not return it.
+
+```{r print_example}
+print_number_five <- function() {
+  cat(5, "\n")
+}
+```
+
+```{r print_call}
+print_number_five()
+```
+
+However, if we try to use the output of `print_number_five()`, we see that the value `5` is printed but we get an error (or numeric(0))when we try to add the number 2 to it!
+
+```{r print_error, error=TRUE}
+print_number_five_output <- print_number_five()
+print_number_five_output + 2
+```
+
+It may seem that `print_number_five()` is returning a value, 5. In reality, it just displays the number 5 to you without giving you the actual value! If your function prints out a value **without returning it** and you try to use that value, you will run into errors, so be careful!
+
+Think about how you might add a line of code to the `print_number_five` function (after `cat(5)`) so that the code `print_number_five_output + 5` would result in the value `10`, rather than an error.
+
+## 2. Functions and CEO Incomes
+
+In this question, we'll look at the 2015 compensation of CEOs at the 100 largest companies in California. The data was compiled from a Los Angeles Times analysis, and ultimately came from filings mandated by the SEC from all publicly-traded companies. Two companies have two CEOs, so there are 102 CEOs in the dataset.
+
+We've copied the raw data from the LA Times page into a file called `raw_compensation.csv`. (The page notes that all dollar amounts are in **millions of dollars**.)
+
+```{r load_compensation}
+raw_compensation <- read.csv('raw_compensation.csv')
+raw_compensation
+```
+
+We want to compute the average of the CEOs' pay. Try running the cell below.
+
+```{r average_error, error=TRUE}
+mean(raw_compensation$Total.Pay)
+```
+
+You should see an error. Let's examine why this error occurred by looking at the values in the `Total.Pay` column. To do so, we can use the `class` function. This function tells us the data type of the object that we pass into it. Run the following cells to see what happens when we pass in `23`, `3.5`, and `"Hello"` to the `class` function. Do their outputs make sense?
+
+```{r class_examples}
+class(23)
+class(3.5)
+class("Hello")
+```
+
+**Question 2.1.** Use the `class` function and set `total_pay_type` to the type of the first value in the "Total.Pay" column.
+
+```{r q21}
+total_pay_type <- 0
+total_pay_type
+```
+
+```{r q21_test}
+# Test: Check the type
+if (grepl("character", total_pay_type) || grepl("factor", total_pay_type)) {
+  cat("✓ Test passed: total_pay_type is correct")
+} else {
+  stop("Test failed: total_pay_type should be character or factor")
+}
+```
+
+**Question 2.2.** You should have found that the values in the `Total.Pay` column are strings (characters). It doesn't make sense to take the average of string values, so we need to convert them to numbers. Extract the first value in `Total.Pay`. It's Mark Hurd's pay in 2015, in *millions* of dollars. Call it `mark_hurd_pay_string`.
+
+```{r q22}
+mark_hurd_pay_string <- 0
+mark_hurd_pay_string
+```
+
+```{r q22_test}
+# Test: Check the string value
+if (as.character(mark_hurd_pay_string) == "$53.25 ") {
+  cat("✓ Test passed: mark_hurd_pay_string =", mark_hurd_pay_string)
+} else {
+  stop("Test failed: mark_hurd_pay_string =", mark_hurd_pay_string)
+}
+```
+
+**Question 2.3.** Convert `mark_hurd_pay_string` to a number of *dollars*.
+
+Some hints, as this question requires multiple steps:
+- The string function `gsub` will be useful for removing the dollar sign; it replaces specified characters in a string. For example, the value of `gsub("%", "", "100%")` is the string `"100"`.
+- You'll also need the function `as.numeric`, which converts a string that looks like a number to an actual number. Don't worry about the whitespace at the end of the string; the `as.numeric` function will ignore this.
+- Finally, remember that the answer should be in dollars, not millions of dollars.
+
+```{r q23}
+# Remove the dollar sign and convert to numeric, then multiply by 1 million
+mark_hurd_pay <- 0
+mark_hurd_pay
+```
+
+```{r q23_test}
+# Test: Check the numeric value
+if (mark_hurd_pay == 53250000) {
+  cat("✓ Test passed: mark_hurd_pay =", mark_hurd_pay)
+} else {
+  stop("Test failed: mark_hurd_pay =", mark_hurd_pay, "should be 53250000")
+}
+```
+
+To compute the average pay, we need to do this for every CEO. But that looks like it would involve copying this code 102 times.
+
+We'll instead use functions to perform this computation. Later in this lab, we'll see the payoff: we can call that function on every pay string in the dataset at once.
+
+**Question 2.4.** Copy the expression you used to compute `mark_hurd_pay`, and use it as the return expression of the function below. But make sure you replace the specific `mark_hurd_pay_string` with the generic `pay_string` name specified in the first line in the function definition.
+
+*Hint*: When dealing with functions, you should generally not be referencing any variable outside of the function. Usually, you want to be working with the arguments that are passed into it, such as `pay_string` for this function. If you're using `mark_hurd_pay_string` within your function, you're referencing an outside variable!
+
+```{r q24}
+convert_pay_string_to_number <- function(pay_string) {
+  # Converts a pay string like '$100' (in millions) to a number of dollars
+  
+}
+```
+
+```{r q24_test}
+# Test: Check the function works correctly
+test1 <- convert_pay_string_to_number("$100 ")
+test2 <- convert_pay_string_to_number("$23 ")
+if (test1 == 100000000.0 && test2 == 23000000.0) {
+  cat("✓ Test passed: convert_pay_string_to_number function works correctly")
+} else {
+  stop("Test failed: Check your function definition")
+}
+```
+
+Running that cell doesn't convert any particular pay string. Instead, it creates a function called `convert_pay_string_to_number` that can convert *any* string with the right format to a number representing millions of dollars.
+
+We can call our function just like we call the built-in functions we've seen. It takes one argument, *a string*, and it returns a number.
+
+```{r function_examples}
+convert_pay_string_to_number('$42')
+convert_pay_string_to_number(mark_hurd_pay_string)
+
+# We can also compute Safra Catz's pay in the same way:
+safra_pay_string <- raw_compensation[grepl("Safra", raw_compensation$Name), "Total.Pay"][1]
+convert_pay_string_to_number(safra_pay_string)
+```
+
+With this function, we don't have to copy the code that converts a pay string to a number each time we wanted to convert a pay string. Now we just call a function whose name says exactly what it's doing.
+
+## 3. `apply`ing functions
+
+Defining a function is a lot like giving a name to a value with `<-`. In fact, a function is a value just like the number 1 or the text "data"!
+
+For example, we can make a new name for the built-in function `max` if we want:
+
+```{r function_assignment}
+our_name_for_max <- max
+our_name_for_max(2, 6)
+```
+
+The old name for `max` is still around:
+
+```{r max_still_works}
+max(2, 6)
+```
+
+Try just writing `max` or `our_name_for_max` (or the name of any other function) in a cell, and run that cell. R will print out a (very brief) description of the function.
+
+```{r function_description}
+max
+```
+
+Let's look at what happens when we set `max` to a non-function value. R now thinks you're trying to use a number like a function, which causes an error. Look out for any functions that might have been renamed when you encounter this type of error.
+
+```{r max_error, error=TRUE}
+max <- 5
+max(2, 6)
+```
+
+```{r reset_max}
+# This cell resets max to the built-in function. Just run this cell, don't change its contents
+max <- base::max
+```
+
+Why is this useful? Since functions are just values, it's possible to pass them as arguments to other functions. Here's a simple but not-so-practical example: we can make a vector of functions.
+
+```{r function_vector}
+c(max, mean, length)
+```
+
+**Question 3.1.** Make a vector containing any 3 other functions you've seen. Call it `some_functions`.
+
+```{r q31}
+some_functions <- c()
+some_functions
+```
+
+```{r q31_test}
+# Test: Check that we have 3 functions
+if (length(some_functions) == 3 && 
+    is.function(some_functions[[1]]) && 
+    is.function(some_functions[[2]]) && 
+    is.function(some_functions[[3]])) {
+  cat("✓ Test passed: some_functions contains 3 functions")
+} else {
+  stop("Test failed: some_functions should contain 3 functions")
+}
+```
+
+Working with functions as values can lead to some funny-looking code. For example, see if you can figure out why the following code works.
+
+```{r function_indexing}
+c(max, mean, length)[[1]](4, -2, 7)
+```
+
+A more useful example of passing functions to other functions as arguments is using `sapply` or `lapply` in R.
+
+`sapply` calls a function many times, once on *each* element in a vector. It produces a *vector* of the results. Here we use `sapply` to convert every CEO's pay to a number, using the function you defined:
+
+*Note:* You'll see numbers like `5.325e+07`. This is R's way of representing **scientific notation**. We interpret `5.325e+07` as `5.325 * 10^7`, or `53,250,000`.
+
+```{r sapply_example}
+sapply(raw_compensation$Total.Pay, convert_pay_string_to_number, simplify = TRUE)
+```
+
+Here's an illustration of what that did:
+
+<img src="apply.png"/>
+
+Note that we didn't write `sapply(raw_compensation$Total.Pay, convert_pay_string_to_number())`. We just passed the name of the function, with no parentheses, to `sapply`, because all we want to do is let `sapply` know the name of the function we'd like to use. `sapply` will then call the function `convert_pay_string_to_number` on each value in the vector for us!
+
+**Question 3.2.** Using `sapply`, make a data frame that's a copy of `raw_compensation` with one additional column called `Total.Pay.new`. That column should contain the result of applying `convert_pay_string_to_number` to the `Total.Pay` column (as we did above). Call the new data frame `compensation`.
+
+```{r q32}
+compensation <- raw_compensation
+compensation$Total.Pay.new <- sapply(raw_compensation$Total.Pay, convert_pay_string_to_number, simplify = TRUE)
+compensation
+```
+
+```{r q32_test}
+# Test: Check the new column exists and has correct values
+if ("Total.Pay.new" %in% names(compensation)) {
+  sorted_comp <- compensation[order(unlist(compensation$Total.Pay.new), decreasing = TRUE), ]
+  if (abs(sorted_comp$Total.Pay.new[1] - 53250000.0) < 1000) {
+    cat("✓ Test passed: compensation data frame is correct")
+  } else {
+    stop("Test failed: Values in Total.Pay.new column are incorrect")
+  }
+} else {
+  stop("Test failed: Total.Pay.new column not found")
+}
+```
+
+Now that we have all the pays as numbers, we can learn more about them through computation.
+
+**Question 3.3.** Compute the average total pay of the CEOs in the dataset.
+
+```{r q33}
+average_total_pay <- 0
+average_total_pay
+```
+
+```{r q33_test}
+# Test: Check the average
+expected_avg <- 11558613.861386139
+if (abs(average_total_pay - expected_avg) < expected_avg * 0.1) {
+  cat("✓ Test passed: average_total_pay =", average_total_pay)
+} else {
+  stop("Test failed: average_total_pay =", average_total_pay)
+}
+```
+
+**Question 3.4** Companies pay executives in a variety of ways: in cash, by granting stock or other equity in the company, or with ancillary benefits (like private jets). Compute the proportion of each CEO's pay that was cash. (Your answer should be a vector of numbers, one for each CEO in the dataset.)
+
+*Hint:* What function have you defined that can convert a string to a number?
+
+```{r q34}
+cash_amounts <- 0
+total_amounts <- 0
+cash_proportion <- cash_amounts / total_amounts
+cash_proportion
+```
+
+```{r q34_test}
+# Test: Check the cash proportion calculation
+if (length(cash_proportion) == 101 && abs(cash_proportion[1] - 0.01784038) < 0.001) {
+  cat("✓ Test passed: cash_proportion is correct")
+} else {
+  stop("Test failed: Check your cash_proportion calculation")
+}
+```
+
+**Why is `sapply` useful?**
+
+For operations like arithmetic, you don't need to use `sapply`, because they automatically work on each element of a vector. But there are many things that don't. The string manipulation we did in today's lab is one example. Since you can write any code you want in a function, `sapply` gives you greater control over how you operate on data.
+
+Check out the `X..Change` column in `compensation`. It shows the percentage increase in the CEO's pay from the previous year. For CEOs with no previous year on record, it instead says "(No previous year)". The values in this column are *strings*, not numbers, so like the `Total.Pay` column, it's not usable without a bit of extra work.
+
+Given your current pay and the percentage increase from the previous year, you can compute your previous year's pay. For example, if your pay is $120 this year, and that's an increase of 50% from the previous year, then your previous year's pay was $120 / (1 + 50/100)$, or $80.
+
+**Question 3.5** Create a new data frame called `with_previous_compensation`. It should be a copy of `compensation`, but with the "(No previous year)" CEOs filtered out, and with an extra column called `X2014.Total.Pay.new`. That column should have each CEO's pay in 2014.
+
+*Hint 1:* You can print out your results after each step to make sure you're on the right track.
+
+*Hint 2:* We've provided a structure that you can use to get to the answer. However, if it's confusing, feel free to delete the current structure and approach the problem your own way!
+
+```{r q35}
+# Function to turn percent to number
+percent_string_to_num <- function(percent_string) {
+  # Converts a percentage string to a number
+  return(as.numeric(gsub("%", "", percent_string)))
+}
+
+# Compensation data frame where there is a previous year
+having_previous_year <- compensation[compensation$X..Change != "(No previous year)", ]
+
+# Get the percent changes as numbers instead of strings
+percent_changes <- sapply(having_previous_year$X..Change, percent_string_to_num)
+
+# Calculate the previous year's pay
+current_pay <- having_previous_year$Total.Pay.new
+previous_pay <- current_pay / (1 + percent_changes / 100)
+
+# Put the previous pay column into the having_previous_year data frame
+with_previous_compensation <- 0
+with_previous_compensation$X2014.Total.Pay.new <- 0
+
+with_previous_compensation
+```
+
+```{r q35_test}
+# Test: Check the result
+if (!"(No previous year)" %in% with_previous_compensation$X..Change &&
+    nrow(with_previous_compensation) == 80) {
+  sorted_prev <- with_previous_compensation[order(with_previous_compensation$X2014.Total.Pay...., decreasing = TRUE), ]
+  if (abs(sorted_prev$X2014.Total.Pay.new[1] - 67700000.0) < 1000000) {
+    cat("✓ Test passed: with_previous_compensation is correct")
+  } else {
+    stop("Test failed: Values in 2014 pay column are incorrect")
+  }
+} else {
+  stop("Test failed: Check filtering and row count")
+}
+```
+
+**Question 3.6** Determine the average pay in 2014 of the CEOs that appear in the `with_previous_compensation` data frame. Assign this value to the variable `average_pay_2014`.
+
+```{r q36}
+average_pay_2014 <- 0
+average_pay_2014
+```
+
+```{r q36_test}
+# Test: Check the 2014 average
+expected_2014 <- 11794790.817048479
+if (abs(average_pay_2014 - expected_2014) < expected_2014 * 0.01) {
+  cat("✓ Test passed: average_pay_2014 =", average_pay_2014)
+} else {
+  stop("Test failed: average_pay_2014 =", average_pay_2014)
+}
+```
+
+## 4. Histograms
+
+Earlier, we computed the average pay among the CEOs in our 102-CEO dataset. The average doesn't tell us everything about the amounts CEOs are paid, though. Maybe just a few CEOs make the bulk of the money, even among these 102.
+
+We can use a *histogram* to display the *distribution* of a set of numbers. In R, we can create histograms using the `hist` function or `ggplot2`.
+
+**Question 4.1.** Make a histogram of the total pay of the CEOs in `compensation`. Check with a peer or instructor to make sure you have the right plot.
+
+```{r q41}
+hist(0, 
+     main = "Distribution of CEO Total Pay", 
+     xlab = "Total Pay ($)", 
+     ylab = "Frequency",
+     breaks = 20)
+```
+
+**Question 4.2.** How many CEOs made more than $30 million in total pay? Find the value using code, then check that the value you found is consistent with what you see in the histogram.
+
+```{r q42}
+num_ceos_more_than_30_million_2 <- 0
+num_ceos_more_than_30_million_2
+```
+
+```{r q42_test}
+# Test: Check the count
+if (num_ceos_more_than_30_million_2 == 5) {
+  cat("✓ Test passed: num_ceos_more_than_30_million_2 =", num_ceos_more_than_30_million_2)
+} else {
+  stop("Test failed: num_ceos_more_than_30_million_2 =", num_ceos_more_than_30_million_2)
+}
+```
+
+<img src="mel2.jpeg" alt="Photo of a dog being pet" width="30%"/>
+
+**Mel** loves going on walks. Now that you're finished with Lab 04, it's time to go take her on a walk!

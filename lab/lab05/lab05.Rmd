@@ -1,0 +1,509 @@
+---
+title: "Lab 5: Simulations"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+<img src="data8logo.png" style="width: 15%; float: right; padding: 1%; margin-right: 2%;"/>
+
+# Lab 5: Simulations
+
+Welcome to Lab 5! 
+
+We will go over iteration and simulations, as well as introduce the concept of randomness.
+
+The data used in this lab will contain salary data and other statistics for basketball players from the 2014-2015 NBA season. This data was collected from the following sports analytic sites: [Basketball Reference](http://www.basketball-reference.com) and [Spotrac](http://www.spotrac.com).
+
+
+```{r libraries}
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+library(readr)
+
+# Set random seed for reproducibility
+set.seed(42)
+```
+
+## 1. Nachos and Conditionals
+
+In R, the logical (boolean) is a data type with only two possible values: `TRUE` and `FALSE`. Expressions containing comparison operators such as `<` (less than), `>` (greater than), and `==` (equal to) evaluate to logical values. A list of common comparison operators can be found below!
+
+<img src="comparisons.png" alt="Chart of comparison operators">
+
+Run the cell below to see an example of a comparison operator in action.
+
+```{r comparison_example}
+3 > (1 + 1)
+```
+
+We can even assign the result of a comparison operation to a variable. Note that `==` and `=` are **not** the same!
+
+```{r assignment_example}
+result <- 10 / 2 == 5
+result
+```
+
+Just like arithmetic operators can be applied on every item of a vector, comparison operators can also be used on vectors to compare an entire vector with some value. The output of this comparison is a vector of logical values.
+
+```{r vector_comparison}
+c(1, 5, 7, 8, 3, -1) > 3
+```
+
+One day, when you come home after a long week, you see a hot bowl of nachos waiting on the dining table! Let's say that whenever you take a nacho from the bowl, it will either have only **cheese**, only **salsa**, **both** cheese and salsa, or **neither** cheese nor salsa (a sad tortilla chip indeed). 
+
+Let's try and simulate taking nachos from the bowl at random using the function, `sample(...)`.
+
+### `sample`
+
+The R function `sample` picks one or more items at random from the given vector. It is equally likely to pick any of the items. Run the cell below several times, and observe how the results change.
+
+```{r sample_example}
+nachos <- c('cheese', 'salsa', 'both', 'neither')
+sample(nachos, 1)
+```
+
+To repeat this process multiple times, pass in an integer `n` as the second argument to return `n` different random choices. By default, `sample` samples **with replacement** and returns a *vector* of items. Sampling **with replacement** means that after an element is drawn, it is replaced back to where you are sampling from and can be drawn again in the future.
+
+Run the next cell to see an example of sampling with replacement 10 times from the `nachos` vector.
+
+```{r sample_multiple}
+sample(nachos, 10, replace = TRUE)
+```
+
+To count the number of times a certain type of nacho is randomly chosen, we can use `sum()` with a logical condition.
+
+### Counting with `sum()`
+
+`sum()` counts the number of `TRUE` values when applied to a logical vector (remember that in R, **`TRUE` is coded as 1 and `FALSE` is coded as 0**).
+
+Run the next cell to see an example that uses `sum()` for counting.
+
+```{r sum_example}
+sum(c(TRUE, FALSE, FALSE, TRUE, TRUE))
+```
+
+**Question 1.1** Assume we took ten nachos at random, and stored the results in a vector called `ten_nachos` as done below. **Find the number of nachos with only cheese using code** (do not manually enter the final answer).  
+
+*Hint:* Our solution involves a comparison operator (e.g. `==`, `<`, ...) and the `sum()` function.
+
+```{r q11}
+ten_nachos <- c('neither', 'cheese', 'both', 'both', 'cheese', 'salsa', 'both', 'neither', 'cheese', 'both')
+number_cheese <- 0
+number_cheese
+```
+
+```{r q11_test}
+# Test
+if (number_cheese == 3) {
+  cat("✓ Test passed: number_cheese is correct")
+} else {
+  stop("Test failed: number_cheese should be 3")
+}
+```
+
+**Conditional Statements**
+
+A conditional statement is a multi-line statement that allows R to choose among different alternatives based on the truth value of an expression.
+
+Here is a basic example.
+
+```{r}
+sign <- function(x) {
+  if (x > 0) {
+    return('Positive')
+  } else {
+    return('Negative')
+  }
+}
+```
+
+If the input `x` is greater than `0`, we return the string `'Positive'`. Otherwise, we return `'Negative'`.
+
+If we want to test multiple conditions at once, we use the following general format.
+
+```{r}
+if (condition1) {
+  # body 1
+} else if (condition2) {
+  # body 2
+} else if (condition3) {
+  # body 3
+} else {
+  # else body
+}
+```
+
+Only the body for the first conditional expression that is true will be evaluated. Each `if` and `else if` expression is evaluated and considered in order, starting at the top. As soon as a true value is found, the corresponding body is executed, and the rest of the conditional statement is skipped.
+
+**Question 1.2** Complete the following conditional statement so that the string `'More please'` is assigned to the variable `say_please` if the number of nachos with cheese in `ten_nachos` is less than `5`. Use the if statement to do this (do not directly reassign the variable `say_please`). 
+
+*Hint*: You should be using `number_cheese` from Question 1.
+
+```{r q12}
+say_please <- '?'
+
+if (number_cheese < 5) {
+  
+}
+say_please
+```
+
+```{r q12_test}
+# Test
+if (say_please == 'More please') {
+  cat("✓ Test passed: say_please is correct")
+} else {
+  stop("Test failed: say_please should be 'More please'")
+}
+```
+
+**Question 1.3** Write a function called `nacho_reaction` that returns a reaction (as a string) based on the type of nacho passed in as an argument. Use the table below to match the nacho type to the appropriate reaction.
+
+|Nacho Type|Reaction|
+|---|---|
+|cheese|Cheesy!|
+|salsa|Spicy!|
+|both|Wow!|
+|neither|Meh.|
+
+*Hint:* If you're failing the test, double check the spelling of your reactions.
+
+```{r q13}
+nacho_reaction <- function(nacho) {
+    return ('?')
+}
+
+spicy_nacho <- nacho_reaction('salsa')
+spicy_nacho
+```
+
+```{r q13_test}
+# Test
+test_reactions <- c(
+  nacho_reaction('salsa') == 'Spicy!',
+  nacho_reaction('cheese') == 'Cheesy!',
+  nacho_reaction('both') == 'Wow!',
+  nacho_reaction('neither') == 'Meh.'
+)
+
+if (all(test_reactions)) {
+  cat("✓ Test passed: nacho_reaction function is correct")
+} else {
+  stop("Test failed: One or more reactions are incorrect")
+}
+```
+
+**Question 1.4** Create a data frame `ten_nachos_reactions` that consists of the nachos in `ten_nachos` as well as the reactions for each of those nachos. The columns should be called `Nachos` and `Reactions`.
+
+*Hint:* Consider using the `sapply` function, which applies a function to each element of a vector.
+
+```{r q14}
+ten_nachos_df <- 0
+ten_nachos_reactions <- 0
+```
+
+```{r q14_test}
+# Test
+expected_reactions <- c('Meh.', 'Cheesy!', 'Wow!', 'Wow!', 'Cheesy!', 'Spicy!', 'Wow!', 'Meh.', 'Cheesy!', 'Wow!')
+if (all(ten_nachos_reactions$Reactions == expected_reactions)) {
+  cat("✓ Test passed: ten_nachos_reactions is correct")
+} else {
+  stop("Test failed: One or more reactions are incorrect")
+}
+```
+
+**Question 1.5** Using code, find the number of 'Wow!' reactions for the nachos in `ten_nachos_reactions`.
+
+```{r q15}
+number_wow_reactions <- 0
+number_wow_reactions
+```
+
+```{r q15_test}
+# Test
+if (number_wow_reactions == 4) {
+  cat("✓ Test passed: number_wow_reactions is correct")
+} else {
+  stop("Test failed: number_wow_reactions should be 4")
+}
+```
+
+## 2. Simulations and For Loops
+
+Using a `for` statement, we can perform a task multiple times. This is known as iteration. The general structure of a for loop is:
+
+`for (variable in sequence)` followed by code in braces `{}` that are repeated for each element of the `sequence` being iterated over.
+
+**NOTE:** We often use `i` as the variable in our class examples, but you could name it anything!
+
+One use of iteration is to loop through a set of values. For instance, we can print out all of the colors of the rainbow.
+
+```{r rainbow_loop}
+rainbow <- c("red", "orange", "yellow", "green", "blue", "indigo", "violet")
+
+for (color in rainbow) {
+  print(color)
+}
+```
+
+We can see that the code inside the `for` loop, known as the body, is executed once for each item in `rainbow`. The name `color` is assigned to the next value in `rainbow` at the start of each iteration. Note that the name `color` is arbitrary; we could easily have named it something else.
+
+```{r rainbow_loop2}
+for (another_name in rainbow) {
+  print(another_name)
+}
+```
+
+In general, however, we would like the variable name to be somewhat informative.
+
+**Question 2.1** In the following cell, we've loaded the text of _Pride and Prejudice_ by Jane Austen, split it into individual words, and stored these words in a vector `p_and_p_words`. Using a `for` loop, assign `longer_than_five` to the number of words in the novel that are more than 5 letters long.
+
+*Hint*: You can find the number of letters in a word with the `nchar` function.
+
+*Hint*: How can you use `longer_than_five` to keep track of the number of words that are more than five letters long?
+
+```{r q21}
+austen_string <- readLines('Austen_PrideAndPrejudice.txt', warn = FALSE)
+austen_string <- paste(austen_string, collapse = ' ')
+p_and_p_words <- unlist(strsplit(austen_string, "\\s+"))
+
+longer_than_five <- 0
+
+for (word in p_and_p_words) {
+  
+}
+longer_than_five
+```
+
+```{r q21_test}
+# Test
+if (longer_than_five == 35453) {
+  cat("✓ Test passed: longer_than_five is correct")
+} else {
+  stop("Test failed: longer_than_five should be 35453")
+}
+```
+
+Another way we can use `for` loops is to repeat lines of code many times. Sometimes, we don't care about what the value of the loop variable is. We instead take advantage of the fact that the `for` loop will repeat as many times as the length of our sequence.
+
+```{r hello_loop}
+for (i in 1:5) {
+  print("Hello, world!")
+}
+```
+
+**Question 2.2** Using a simulation with 10,000 trials, assign `num_different` to the **number** of times, in 10,000 trials, that two words picked uniformly at random (with replacement) from Pride and Prejudice have different lengths. 
+
+*Hint 1*: What function did we use in section 1 to sample at random with replacement from a vector? 
+
+*Hint 2*: Remember that `!=` checks for non-equality between two items.
+
+```{r q22}
+trials <- 10000
+num_different <- 0
+
+for (i in 1:trials) {
+  # TODO: Write code here
+}
+num_different
+```
+
+```{r q22_test}
+# Test (allowing for some variation due to randomness)
+if (num_different >= 8100 & num_different <= 9100) {
+  cat("✓ Test passed: num_different is in expected range")
+} else {
+  stop("Test failed: num_different should be between 8100 and 9100")
+}
+```
+
+## 3. Sampling Basketball Data
+
+We will now introduce the topic of sampling, which we'll be discussing in more depth in this week's lectures. We'll guide you through this code, but if you wish to read more about different kinds of samples before attempting this question, you can check out section 10 of the textbook.
+
+Run the cell below to load player and salary data that we will use for our sampling.
+
+```{r load_data}
+player_data <- read.csv("player_data.csv")
+salary_data <- read.csv("salary_data.csv")
+
+# Join the tables
+full_data <- merge(salary_data, player_data, by.x = "PlayerName", by.y = "Name")
+    
+
+# Display the first few rows
+head(player_data, 3)
+head(salary_data, 3)
+head(full_data, 3)
+```
+
+Rather than getting data on every player (as in the tables loaded above), imagine that we had gotten data on only a smaller subset of the players. For 492 players, it's not so unreasonable to expect to see all the data, but usually we aren't so lucky.
+
+If we want to make estimates about a certain numerical property of the population, we may have to come up with these estimates based only on a smaller sample. The numerical property of the population is known as a **parameter**, and the estimate is known as a **statistic** (e.g. the mean or median).
+
+To save typing and increase the clarity of your code, we will package the analysis code into a few functions. This will be useful in the rest of the lab as we will repeatedly need to create histograms and collect summary statistics from that data.
+
+We've defined the `histograms` function below, which takes a data frame with columns `Age` and `Salary` and draws a histogram for each one. It uses bin widths of 1 year for `Age` and $1,000,000 for `Salary`.
+
+```{r histograms_function}
+histograms <- function(data) {
+  ages <- data$Age
+  salaries <- data$Salary / 1000000
+  
+  # Create age histogram
+  hist(ages, 
+       breaks = seq(min(ages), max(ages) + 1, by = 1),
+       main = "Age distribution",
+       xlab = "Age (years)",
+       col = "lightblue")
+  
+  # Create salary histogram  
+  hist(salaries,
+       breaks = seq(min(salaries), max(salaries) + 1, by = 1),
+       main = "Salary distribution", 
+       xlab = "Salary (million dollars)",
+       col = "lightgreen")
+}
+
+histograms(full_data)
+print('Two histograms should be displayed above')
+```
+
+**Question 3.1**. Create a function called `compute_statistics` that takes a data frame containing an "Age" column and a "Salary" column and:
+- Draws a histogram of ages
+- Draws a histogram of salaries
+- Returns a two-element vector containing the average age and average salary (in that order)
+
+You can call the `histograms` function to draw the histograms!
+
+```{r q31}
+compute_statistics <- function(age_and_salary_data) {
+  
+}
+
+full_stats <- compute_statistics(full_data)
+full_stats
+```
+
+```{r q31_test}
+# Test
+stats <- compute_statistics(full_data)
+if (abs(stats[1] - 26.54) < 0.01 & abs(stats[2] - 4269775.77) < 1000) {
+  cat("✓ Test passed: compute_statistics function is correct")
+} else {
+  stop("Test failed: Average age should be ~26.54, average salary should be ~4269775.77")
+}
+```
+
+### Simple random sampling
+
+A more justifiable approach is to sample uniformly at random from the players. In a **simple random sample (SRS) without replacement**, we ensure that each player is selected at most once. Imagine writing down each player's name on a card, putting the cards in a box, and shuffling the box. Then, pull out cards one by one and set them aside, stopping when the specified sample size is reached.
+
+### Producing simple random samples
+
+Sometimes, it's useful to take random samples even when we have the data for the whole population. It helps us understand sampling accuracy.
+
+### `sample_n`
+
+The `sample_n` function from dplyr produces a random sample from the data frame. By default, it draws at random **without replacement** from the rows of a data frame. `sample_n` takes in the sample size as its argument and returns a **data frame** with only the rows that were selected.
+
+Run the cell below to see an example call to `sample_n()` with a sample size of 5, without replacement.
+
+```{r sample_n_example}
+# Just run this cell
+salary_data %>% sample_n(5)
+```
+
+**Question 3.2** Produce a simple random sample **without** replacement of size **44** from `full_data`. Then, run your analysis on it again by using the `compute_statistics` function you defined above. Run the cell a few times to see how the histograms and statistics change across different samples.
+
+- How much does the average age change across samples? 
+- What about average salary?
+
+(FYI: srs = simple random sample, wor = without replacement)
+
+_Type your answer here, replacing this text._
+
+```{r q32}
+my_small_srswor_data <- full_data %>% sample_n(44)
+my_small_stats <- compute_statistics(my_small_srswor_data)
+my_small_stats
+```
+
+## 4. More Random Sampling Practice
+
+More practice for random sampling using `sample`.
+
+### Simulations and For Loops (cont.)
+
+**Question 4.1** We can use `sample` to simulate multiple trials.
+
+Stephanie decides to play a game rolling a standard six-sided die, where her score on each roll is determined by the face that is rolled. She wants to know what her total score would be if she rolled the die 1000 times. Write code that simulates her total score after 1000 rolls.
+
+*Hint:* First decide the possible values you can take in the experiment (point values in this case). Then use `sample` to simulate Stephanie's rolls. Finally, sum up the rolls to get Stephanie's total score.
+
+```{r q41}
+possible_point_values <- 1:6
+num_tosses <- 1000
+simulated_tosses <- sample(possible_point_values, num_tosses, replace = TRUE)
+total_score <- sum(simulated_tosses)
+total_score
+```
+
+```{r q41_test}
+# Test (allowing for some variation due to randomness)
+if (total_score >= 3000 & total_score <= 4000) {
+  cat("✓ Test passed: total_score is in expected range")
+} else {
+  stop("Test failed: total_score should be between 3000 and 4000")
+}
+```
+
+### Simple random sampling (cont.)
+
+**Question 4.2** As in the previous question, analyze several simple random samples of size 100 from `full_data` by using the `compute_statistics` function.  
+- Do the histogram shapes seem to change more or less across samples of 100 than across samples of size 44?  
+- Are the sample averages and histograms closer to their true values/shape for age or for salary? What did you expect to see?
+
+_Type your answer here, replacing this text._
+
+```{r q42}
+my_large_srswor_data <- full_data %>% sample_n(100)
+my_large_stats <- compute_statistics(my_large_srswor_data)
+my_large_stats
+```
+
+---
+
+<img src="lincoln.jpeg" alt="Picture of an adorable dog named Lincoln" width="300"/>
+
+**Lincoln** is very happy that you finished the lab!
+
+---
+
+You're done with lab!
+
+**Important submission information:**
+- **Run all the code chunks** and verify that they all work
+- **Save** from the **File** menu
+- **Knit the document to HTML** to create the final output
+- Then, go to [Gradescope](https://www.gradescope.com/courses/703847) and submit the HTML file to the corresponding assignment.
+
+- If you finish early in Regular Lab, **ask one of the staff members to check you off**.
+
+**It is your responsibility to make sure your work is saved before creating the final output.**
+```
+
+This R Markdown version converts:
+- Python's `make_array()` → R's `c()`
+- Python's `np.random.choice()` → R's `sample()`
+- Python's `np.count_nonzero()` → R's `sum()` with logical conditions
+- Python's `Table()` operations → R's `data.frame` and `dplyr` operations
+- Python's conditional syntax → R's conditional syntax
+- Python's array operations → R's vector operations
+
+The lab maintains the same learning objectives around simulations, conditionals, sampling, and for loops, but uses R-native functions and syntax.

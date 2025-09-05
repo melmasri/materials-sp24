@@ -8,8 +8,6 @@ date: "`r Sys.Date()`"
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-<img src="data8logo.png" style="width: 15%; float: right; padding: 1%; margin-right: 2%;"/>
-
 # Lab 5: Simulations
 
 Welcome to Lab 5! 

@@ -408,15 +408,17 @@ A more justifiable approach is to sample uniformly at random from the players. I
 
 Sometimes, it's useful to take random samples even when we have the data for the whole population. It helps us understand sampling accuracy.
 
-### `sample_n`
+### `sample` for data frames
 
-The `sample_n` function from dplyr produces a random sample from the data frame. By default, it draws at random **without replacement** from the rows of a data frame. `sample_n` takes in the sample size as its argument and returns a **data frame** with only the rows that were selected.
+Base R's `sample` function can be used to randomly sample row indices from a data frame. We can then use these indices to subset the data frame. This approach draws at random **without replacement** from the rows of a data frame by default.
 
-Run the cell below to see an example call to `sample_n()` with a sample size of 5, without replacement.
+Run the cell below to see an example of sampling 5 rows without replacement.
 
-```{r sample_n_example}
+```{r sample_example}
 # Just run this cell
-salary_data %>% sample_n(5)
+set.seed(123)  # for reproducible results
+sample_indices <- sample(nrow(salary_data), 5)
+salary_data[sample_indices, ]
 ```
 
 **Question 3.2** Produce a simple random sample **without** replacement of size **44** from `full_data`. Then, run your analysis on it again by using the `compute_statistics` function you defined above. Run the cell a few times to see how the histograms and statistics change across different samples.
@@ -429,7 +431,7 @@ salary_data %>% sample_n(5)
 _Type your answer here, replacing this text._
 
 ```{r q32}
-my_small_srswor_data <- full_data %>% sample_n(44)
+my_small_srswor_data <- 0
 my_small_stats <- compute_statistics(my_small_srswor_data)
 my_small_stats
 ```
@@ -447,10 +449,10 @@ Stephanie decides to play a game rolling a standard six-sided die, where her sco
 *Hint:* First decide the possible values you can take in the experiment (point values in this case). Then use `sample` to simulate Stephanie's rolls. Finally, sum up the rolls to get Stephanie's total score.
 
 ```{r q41}
-possible_point_values <- 1:6
-num_tosses <- 1000
-simulated_tosses <- sample(possible_point_values, num_tosses, replace = TRUE)
-total_score <- sum(simulated_tosses)
+possible_point_values <- 0
+num_tosses <- 0
+simulated_tosses <- 0
+total_score <- 0
 total_score
 ```
 
@@ -472,8 +474,8 @@ if (total_score >= 3000 & total_score <= 4000) {
 _Type your answer here, replacing this text._
 
 ```{r q42}
-my_large_srswor_data <- full_data %>% sample_n(100)
-my_large_stats <- compute_statistics(my_large_srswor_data)
+my_large_srswor_data <- 0
+my_large_stats <- 0
 my_large_stats
 ```
 
@@ -490,20 +492,4 @@ You're done with lab!
 **Important submission information:**
 - **Run all the code chunks** and verify that they all work
 - **Save** from the **File** menu
-- **Knit the document to HTML** to create the final output
-- Then, go to [Gradescope](https://www.gradescope.com/courses/703847) and submit the HTML file to the corresponding assignment.
-
-- If you finish early in Regular Lab, **ask one of the staff members to check you off**.
-
-**It is your responsibility to make sure your work is saved before creating the final output.**
-```
-
-This R Markdown version converts:
-- Python's `make_array()` → R's `c()`
-- Python's `np.random.choice()` → R's `sample()`
-- Python's `np.count_nonzero()` → R's `sum()` with logical conditions
-- Python's `Table()` operations → R's `data.frame` and `dplyr` operations
-- Python's conditional syntax → R's conditional syntax
-- Python's array operations → R's vector operations
-
-The lab maintains the same learning objectives around simulations, conditionals, sampling, and for loops, but uses R-native functions and syntax.
+- **Knit the document to PDF** to create the final output

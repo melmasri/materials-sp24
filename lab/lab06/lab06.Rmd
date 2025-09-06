@@ -201,21 +201,34 @@ After this, we can simulate 210 hand choices, as Emily evaluated in real life, a
 # Please do not change this line. 
 set.seed(16)
 
-model_proportions <- ...
+model_proportions <- c(0.5, 0.5)
 simulation_results <- sample(c("correct", "incorrect"), 210, replace = TRUE, prob = model_proportions)
-simulation_proportion_correct <- ...
-one_statistic <- ...
+simulation_proportion_correct <- 0
+one_statistic <- 0
 one_statistic
 ```
 
 ```{r test_q17}
 # Test for Question 1.7
+if(length(model_proportions) %% 2 == 0) {
 stopifnot(length(model_proportions) %% 2 == 0)
-stopifnot(length(unique(model_proportions)) == 1)
-stopifnot(sum(model_proportions) == 1)
-stopifnot(is.numeric(simulation_proportion_correct))
-stopifnot(round(simulation_proportion_correct, 2) == 0.49)
-stopifnot(abs(round(one_statistic, 2) - 0.95) < 0.05)
+    stop("Test failed: length(model_proportions) %% 2 == 0")
+}
+if(length(unique(model_proportions)) == 1) {
+    stop("Test failed: length(unique(model_proportions)) == 1")
+}
+if(sum(model_proportions) == 1) {
+    stop("Test failed: sum(model_proportions) == 1")
+}
+if(is.numeric(simulation_proportion_correct)) {
+    stop("Test failed: is.numeric(simulation_proportion_correct)")
+}
+if(round(simulation_proportion_correct, 2) == 0.49) {
+    stop("Test failed: round(simulation_proportion_correct, 2) == 0.49")
+}
+if(abs(round(one_statistic, 2) - 0.95) < 0.05) {
+    stop("Test failed: abs(round(one_statistic, 2) - 0.95) < 0.05")
+}
 cat("✓ Test passed: simulation setup is correct")
 ```
 
@@ -229,7 +242,7 @@ Define the function `simulation_and_statistic` to take in the `model_proportions
 simulation_and_statistic <- function(model_proportions, expected_proportion_correct) {
     # Simulates 210 TT hand choices under Emily's model. 
     # Returns one statistic from the simulation.
-    ...
+    
 }
 ```
 
@@ -245,11 +258,23 @@ for (i in 1:num_repetitions) {
 
 ```{r test_q18}
 # Test for Question 1.8
+if(length(simulated_statistics) == 1000) {  
 stopifnot(length(simulated_statistics) == 1000)
-stopifnot(all(simulated_statistics <= 30))
-stopifnot(all(simulated_statistics >= 0))
+    stop("Test failed: length(simulated_statistics) == 1000")
+}
+if(all(simulated_statistics <= 30)) {
+    stop("Test failed: all(simulated_statistics <= 30)")
+}
+if(all(simulated_statistics >= 0)) {
+    stop("Test failed: all(simulated_statistics >= 0)")
+}
+if(test_single >= 0 & test_single <= 25) {
+    stop("Test failed: test_single >= 0 & test_single <= 25")
+}
 test_single <- simulation_and_statistic(model_proportions, expected_proportion_correct)
-stopifnot(test_single >= 0 & test_single <= 25)
+if(test_single >= 0 & test_single <= 25) {
+    stop("Test failed: test_single >= 0 & test_single <= 25")
+}
 cat("✓ Test passed: simulation function works correctly")
 ```
 
@@ -300,13 +325,18 @@ Therapeutic touch fell out of use after this experiment, which was eventually ac
 Did you talk to your peers or look at the discussion forum? (TRUE/FALSE)
 
 ```{r q110}
-peer_talk <- ...
+peer_talk <- 0
 peer_talk
 ```
 
 ```{r test_q110}
 # Test for Question 1.10
-stopifnot(peer_talk == TRUE)
+if(peer_talk == TRUE) {
+    stop("Test failed: peer_talk == TRUE")
+}
+if(peer_talk == FALSE) {
+    stop("Test failed: peer_talk == TRUE")
+}
 cat("✓ Test passed: peer discussion completed")
 ```
 
@@ -323,17 +353,7 @@ You're done with lab!
 **Important submission information:**
 - **Run all the code chunks** and verify that they all work
 - **Save** from the **File** menu
-- **Knit the document to HTML** to create the final output
-- Then, go to [Gradescope](https://www.gradescope.com/courses/703847) and submit the HTML file to the corresponding assignment. The name of this assignment is "Lab XX Autograder", where XX is the lab number -- 01, 02, 03, etc.
+- **Knit the document to PDF** to create the final output
 
-- If you finish early in Regular Lab, **ask one of the staff members to check you off**.
 
 **It is your responsibility to make sure your work is saved before creating the final output.**
-
-This R Markdown version converts:
-- Python's `sample_proportions()` → R's `sample()` with probabilities
-- Python's `make_array()` → R's `c()` 
-- Python's `np.count_nonzero()` → R's `sum()` with logical conditions
-- Python's datascience Table → R's base data structures and ggplot2
-- Python's numpy random seed → R's `set.seed()`
-- All statistical concepts remain the same while using R syntax

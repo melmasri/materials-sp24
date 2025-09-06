@@ -1,0 +1,339 @@
+---
+title: "Lab 6: Examining the Therapeutic Touch"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+# Lab 6: Examining the Therapeutic Touch
+
+Welcome to Lab 6! This assignment involves using statistical modeling, hypothesis testing, and simulation to analyze data and draw conclusions
+
+Recommended Reading:
+
+* [Assessing a Model](https://inferentialthinking.com/chapters/11/1/Assessing_a_Model.html)
+* [Empirical Distribution of a Statistic](https://inferentialthinking.com/chapters/10/3/Empirical_Distribution_of_a_Statistic.html)
+* [Random Sampling in Python](https://inferentialthinking.com/chapters/10/4/Random_Sampling_in_Python.html)
+
+
+
+Let's begin by setting up the tests and imports by running the cell below.
+
+After such an extensive introduction to programming for data science, we are finally moving into the section of the course where we can apply our new skills to answer real questions.  
+
+In this lab, we'll use testing techniques that were introduced in lecture to test the idea of the therapeutic touch, the idea that some practitioner can feel and massage your human energy field. 
+
+```{r imports}
+# Run this cell, but please don't change it.
+## if you need to install the packaged, uncomment the lines below
+# install.packages("ggplot2")
+# install.packages("dplyr")
+ 
+# These lines load the necessary R packages
+library(ggplot2)
+library(dplyr)
+
+# Set up plotting theme
+theme_set(theme_minimal())
+
+# For reproducible results
+set.seed(42)
+```
+
+## 1. What is the Therapeutic Touch
+
+The Therapeutic Touch (TT) is the idea that everyone can feel the Human Energy Field (HEF) around individuals.  Those who practice TT have described different people's HEFs as "warm as Jell-O" and "tactile as taffy." 
+
+TT was a popular technique used throughout the 20th century that was toted as a great way to bring balance to a person's health. Certain practitioners claim they have the ability to feel the HEF and can massage it in order to promote health and relaxation in individuals.
+
+### Emily Rosa
+
+[Emily Rosa](https://en.wikipedia.org/wiki/Emily_Rosa) was a 4th grade student who was very familiar with the world of TT, thanks to her parents, who were both medical practitioners and skeptics of TT.
+
+For her 4th grade science fair project, Emily decided to test whether or not TT practitioners could truly interact with a person's HEF. She later went on to publish her work in TT, becoming the youngest person to have a research paper published in a peer reviewed medical journal.
+
+### Emily's Experiment
+
+Emily's experiment was clean, simple, and effective. Due to her parents' occupations in the medical field, she had wide access to people who claimed to be TT practitioners. 
+
+Emily took 21 TT practitioners and used them for her science experiment. She would take a TT practitioner and ask them to extend their hands through a screen (which they can't see through). Emily would be on the other side and would flip a fair coin. Depending on how the coin landed, she would put out either her left hand or her right hand. The TT practitioner would then have to answer which hand Emily put out. If a pracitioner could truly interact with a person's HEF, it would be expected that they answered correctly.
+
+Overall, through 210 samples, the practitioner picked the correct hand 44% of the time. 
+
+Emily's main goal here was to test whether or not the TT practicioners' guesses were random, like the flip of a coin. In most medical experiments, this is the norm. **We want to test whether or not the treatment has an effect, *not* whether or not the treatment actually works.**
+
+We will now begin to formulate this experiment in terms of the terminology we learned in this course. 
+
+**Question 1.1**: Describe Emily's [model](https://inferentialthinking.com/chapters/11/1/Assessing_a_Model.html) for how likely the TT practitioners are to choose the correct hand. What alternative model is her model meant to discredit?
+
+If you are able, check in with fellow peers, the discussion forum, or your lab TA/AIs, to come to a conclusion.
+
+_Type your answer here, replacing this text._
+
+**Question 1.2:** Remember that the practitioner got the correct answer 44% (0.44) of the time. According to Emily's model, on average, what proportion of times do we expect the practitioner to guess the correct hand? Make sure your answer is a number between 0 and 1. 
+
+```{r q12}
+expected_proportion_correct <- -1
+expected_proportion_correct
+```
+
+```{r test_q12}
+# Test for Question 1.2
+if (expected_proportion_correct >= 0 & expected_proportion_correct <= 1) {
+  cat("✓ Test passed: expected_proportion_correct is correct")
+} else {
+  stop("Test failed: expected_proportion_correct =", expected_proportion_correct)
+}
+```
+
+The goal now is to see if our deviation from this expected proportion of correct answers is due to something other than chance. 
+
+**Question 1.3:** We usually use a statistic to help determine which model the evidence points towards. What is a statistic that we can use to compare outcomes under Emily's model to what was observed? Assign `valid_stat` to a vector of integer(s) representing test statistics that Emily can use: 
+
+1. The difference between the expected percent correct and the actual percent correct
+2. The absolute difference between the expected percent correct and the actual percent correct
+3. The sum of the expected percent correct and the actual percent correct
+
+**NOTE:** Make sure to use `c()` to create your vector of integer(s)!
+
+> *Hint*: What should the domain (possible x values) be for the distribution of our test statistics?
+
+```{r q13}
+valid_stat <- 0
+valid_stat
+```
+
+```{r test_q13}
+# Test for Question 1.3
+if (is.vector(valid_stat) && sum(valid_stat) == 2) {
+  cat("✓ Test passed: valid_stat is correct")
+} else {
+  stop("Test failed: valid_stat =", valid_stat)
+}
+```
+
+**Question 1.4:** Why is the statistic from Question 1.3 the appropriate choice for comparing outcomes in Emily's experiment? How does it relate to the models you defined in Question 1.1?
+
+_Type your answer here, replacing this text._
+
+**Question 1.5:** Define the function `statistic` which takes in an expected proportion and an actual proportion, and returns the value of the statistic chosen in Question 1.3. Assume that the argument takes in proportions, but  return your answer as a percentage. 
+
+*Hint:* Remember we are asking for a **percentage**, not a proportion. 
+
+```{r q15}
+statistic <- function(expected_prop, actual_prop) {
+    return(0)
+}
+```
+
+```{r test_q15}
+# Test for Question 1.5
+test_result1 <- round(statistic(0.5, 0.5) + statistic(0.4, 0.1), 1)
+test_result2 <- statistic(0.4, 0.1) - statistic(0.1, 0.4)
+if (round(test_result1) == 30 & round(test_result2) == 0) {
+  cat("✓ Test passed: statistic function is correct")
+} else {
+  stop("Test failed: statistic function is incorrect")
+}
+```
+
+**Question 1.6:** Use your newly defined function to calculate the observed statistic from Emily's experiment. 
+
+```{r q16}
+observed_statistic <- 0
+observed_statistic
+```
+
+```{r test_q16}
+# Test for Question 1.6
+if (round(observed_statistic, 2) == 6) {
+  cat("✓ Test passed: observed_statistic is correct")
+} else {
+  stop("Test failed: observed_statistic =", observed_statistic)
+}
+```
+
+**Is this observed statistic consistent with what we expect to see under Emily's model?**
+
+In order to answer this question, we must simulate the experiment as though Emily's model was correct, and calculate our statistic for every simulation.
+
+### `sample` for proportions
+
+R's `sample` function can be used to randomly sample from multiple categories when you know the proportion of data points that are expected to fall in each category. We can use `sample` with `replace = TRUE` and probabilities.
+
+Consider flipping a fair coin, where the two outcomes (coin lands heads and coin lands tails) occur with an equal chance. We expect that half of all coin flips will land heads, and half of all coin flips will land tails.
+
+Run the following cell to see the simulation of 10 flips of a fair coin. Let the first outcome be heads and the second be tails.
+
+*Observe what happens when you run this cell multiple times—the proportion of coin flips that land heads and tails appears to change, as you are simulating flipping 10 coins each time!*
+
+```{r coin_example}
+coin_outcomes <- c("heads", "tails")
+coin_probabilities <- c(0.5, 0.5)
+ten_flips <- sample(coin_outcomes, 10, replace = TRUE, prob = coin_probabilities)
+ten_flips_proportions <- table(ten_flips) / 10
+ten_flips_proportions
+```
+
+The result shows the proportion of each category that appears in the sample. 
+
+In our example, we can extract the simulated proportion of heads and tails:
+
+```{r coin_proportions}
+simulated_proportion_heads <- ten_flips_proportions["heads"]
+simulated_proportion_tails <- ten_flips_proportions["tails"]
+
+cat("In our simulation,", simulated_proportion_heads, "of flips were heads and", 
+    simulated_proportion_tails, "of flips were tails.\n")
+```
+
+**Question 1.7:** To begin simulating, we should start by creating a representation of Emily's model to use for our simulation. This will be a vector with two items in it. The first item should be the proportion of times a TT practictioner picks the correct hand, assuming that Emily's model was correct. The second item should be the proportion of times, under the same assumption, that the TT practitioner picks the incorrect hand. Assign `model_proportions` to this vector. 
+
+After this, we can simulate 210 hand choices, as Emily evaluated in real life, and find a single statistic to summarize this instance of the simulation. Use the `sample` function and assign the **proportion of correct hand choices** (out of 210) to `simulation_proportion_correct`. Lastly, use your `statistic` function to assign `one_statistic`  to the value of the statistic for this one simulation.
+
+```{r q17}
+# This saves the random state of our code so that we can 
+# generate the same numbers each time we run the code.
+# Please do not change this line. 
+set.seed(16)
+
+model_proportions <- ...
+simulation_results <- sample(c("correct", "incorrect"), 210, replace = TRUE, prob = model_proportions)
+simulation_proportion_correct <- ...
+one_statistic <- ...
+one_statistic
+```
+
+```{r test_q17}
+# Test for Question 1.7
+stopifnot(length(model_proportions) %% 2 == 0)
+stopifnot(length(unique(model_proportions)) == 1)
+stopifnot(sum(model_proportions) == 1)
+stopifnot(is.numeric(simulation_proportion_correct))
+stopifnot(round(simulation_proportion_correct, 2) == 0.49)
+stopifnot(abs(round(one_statistic, 2) - 0.95) < 0.05)
+cat("✓ Test passed: simulation setup is correct")
+```
+
+**Question 1.8:** Let's now see what the distribution of statistics is actually like under Emily's model. 
+
+Define the function `simulation_and_statistic` to take in the `model_proportions` vector and the expected proportion of times a TT practitioner would guess a hand correctly under Emily's model. The function should simulate Emily running through the experiment 210 times and return the statistic of this one simulation. 
+
+*Hint:* This should follow the same pattern as the code you did in the previous problem.  
+
+```{r q18_function}
+simulation_and_statistic <- function(model_proportions, expected_proportion_correct) {
+    # Simulates 210 TT hand choices under Emily's model. 
+    # Returns one statistic from the simulation.
+    ...
+}
+```
+
+```{r q18_simulation}
+num_repetitions <- 1000
+
+simulated_statistics <- numeric(num_repetitions)
+
+for (i in 1:num_repetitions) {
+    simulated_statistics[i] <- simulation_and_statistic(model_proportions, expected_proportion_correct)
+}
+```
+
+```{r test_q18}
+# Test for Question 1.8
+stopifnot(length(simulated_statistics) == 1000)
+stopifnot(all(simulated_statistics <= 30))
+stopifnot(all(simulated_statistics >= 0))
+test_single <- simulation_and_statistic(model_proportions, expected_proportion_correct)
+stopifnot(test_single >= 0 & test_single <= 25)
+cat("✓ Test passed: simulation function works correctly")
+```
+
+Let's view the distribution of the simulated statistics under Emily's model, and visually compare where the observed statistic lies relative to the simulated statistics.
+
+```{r plot_distribution}
+# Create histogram of simulated statistics
+hist(simulated_statistics, 
+     main = "Distribution of Simulated Statistics", 
+     xlab = "Simulated Statistics",
+     col = "lightblue",
+     border = "black")
+
+# Add red point for observed statistic
+points(observed_statistic, 0, col = "red", pch = 16, cex = 2)
+```
+
+We can make a visual argument as to whether we believe the observed statistic is consistent with Emily's model. Here, since larger values of the test statistic suggest the alternative model (where the chance of guessing the correct hand is something other than 50%), we can formalize our analysis by finding what proportion of simulated statistics were as large or larger than our observed test statistic (the area at or to the right of the observed test statistic). If this area is small enough, we'll declare that the observed data are inconsistent with our simulated model. Here is the [link](https://inferentialthinking.com/chapters/11/1/Assessing_a_Model.html) to the section in the textbook.
+
+**Question 1.9:** Calculate the proportion of simulated statistics in Question 1.8 greater than or equal to the observed statistic. 
+
+*Hint:* Use `sum()` to count how many values meet the condition.
+
+```{r q19}
+proportion_greater_or_equal <- ...
+proportion_greater_or_equal
+```
+
+```{r test_q19}
+# Test for Question 1.9
+stopifnot(proportion_greater_or_equal >= 0 & proportion_greater_or_equal <= 1)
+expected_count <- sum(simulated_statistics >= observed_statistic)
+stopifnot(proportion_greater_or_equal * 1000 == expected_count)
+cat("✓ Test passed: proportion calculation is correct")
+```
+
+By convention, we often compare the proportion we just calculated to 0.05. If the proportion of simulated statistics greater than or equal to the observed statistic is sufficiently small (less than or equal to 0.05), then this is evidence against Emily's model. Conceptually, you may think of this as the case where less than 5% of simulated values are as far or farther away from what we had expected. If this is not the case, we don't have any reason to doubt Emily's model. 
+
+This should help you make your own conclusions about Emily Rosa's experiment. 
+
+Therapeutic touch fell out of use after this experiment, which was eventually accepted into one of the premier medical journals. TT practitioners hit back and accused Emily and her family of tampering with the results, while some claimed that Emily's bad spiritual mood towards therapeutic touch made it difficult to read her HEF. Whatever it may be, Emily's experiment is a classic example about how anyone, with the right resources, can test anything they want!
+
+**Question 1.10:** Now, take some time to reflect on the questions below and then, discuss with your peers or take a look at the discussions on the Ed post for this lab.
+
+1. Is the data more consistent with Emily' model (practitioners were randomly guessing)?
+2. What does this mean in terms of Emily's experiment? Do the TT practitioners' answers follow an even chance model or is there something else at play? 
+
+Did you talk to your peers or look at the discussion forum? (TRUE/FALSE)
+
+```{r q110}
+peer_talk <- ...
+peer_talk
+```
+
+```{r test_q110}
+# Test for Question 1.10
+stopifnot(peer_talk == TRUE)
+cat("✓ Test passed: peer discussion completed")
+```
+
+## You finished Lab 06! 
+
+<img src="teddy_cookie.jpeg" alt="Two cute dogs chilling on a bed" width="300"/>
+
+**Teddy and Cookies** are sending you virtual cookies!!!
+
+---
+
+You're done with lab!
+
+**Important submission information:**
+- **Run all the code chunks** and verify that they all work
+- **Save** from the **File** menu
+- **Knit the document to HTML** to create the final output
+- Then, go to [Gradescope](https://www.gradescope.com/courses/703847) and submit the HTML file to the corresponding assignment. The name of this assignment is "Lab XX Autograder", where XX is the lab number -- 01, 02, 03, etc.
+
+- If you finish early in Regular Lab, **ask one of the staff members to check you off**.
+
+**It is your responsibility to make sure your work is saved before creating the final output.**
+
+This R Markdown version converts:
+- Python's `sample_proportions()` → R's `sample()` with probabilities
+- Python's `make_array()` → R's `c()` 
+- Python's `np.count_nonzero()` → R's `sum()` with logical conditions
+- Python's datascience Table → R's base data structures and ggplot2
+- Python's numpy random seed → R's `set.seed()`
+- All statistical concepts remain the same while using R syntax

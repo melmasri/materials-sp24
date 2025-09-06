@@ -339,7 +339,6 @@ if(peer_talk == FALSE) {
 }
 cat("✓ Test passed: peer discussion completed")
 ```
-
 ## You finished Lab 06! 
 
 <img src="teddy_cookie.jpeg" alt="Two cute dogs chilling on a bed" width="300"/>

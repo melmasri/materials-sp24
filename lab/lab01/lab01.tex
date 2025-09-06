@@ -1,0 +1,1063 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Lab 01: Welcome to Data Science with R},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Lab 01: Welcome to Data Science with R}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\section{Welcome!}\label{welcome}
+
+Welcome to DATA1517 Each week you will complete a lab assignment like
+this one. You can't learn technical subjects without hands-on practice,
+so labs are an important part of the course.
+
+Before we get started, there are some administrative details.
+
+The weekly lab sessions are designed to develop your skills with
+computational and inferential concepts. These lab assignments are a
+required part of the course and will be released every Monday and due
+next Monday at 5 PM.
+
+Lab sessions are not webcast! Here are the policies for getting full
+credit (Lab is worth 10\% of your final grade):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  If you are within regular lab, to receive credit for lab you must
+  attend.
+\item
+  If you are within the self-service lab you will have the option to
+  complete the lab on your own and submit the completed lab by 5 PM on
+  the due date.
+\end{enumerate}
+
+Collaborating on labs is more than okay -- it's encouraged! You should
+rarely remain stuck for more than a few minutes on questions in labs, so
+ask an instructor or classmate for help. (Explaining things is
+beneficial, too -- the best way to solidify your knowledge of a subject
+is to explain it.) Please don't just share answers, though.
+
+\paragraph{Today's lab}\label{todays-lab}
+
+In today's lab, you'll learn how to:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  navigate R Markdown documents (like this one);
+\item
+  write and evaluate some basic \emph{expressions} in R, the statistical
+  computing language;
+\item
+  call \emph{functions} to use code other people have written; and
+\item
+  break down R code into smaller parts to understand it.
+\end{enumerate}
+
+This lab covers parts of
+\href{http://www.inferentialthinking.com/chapters/03/programming-in-python.html}{Chapter
+3} of the online textbook, adapted for R. You should read the examples
+in the book, but not right now. Instead, let's get started!
+
+\section{1. R Markdown Documents}\label{r-markdown-documents}
+
+This document is called an R Markdown document. A document is a place to
+write programs and view their results, and also to write text.
+
+\subsection{1.1. Text sections}\label{text-sections}
+
+In an R Markdown document, each section containing text or code is
+organized into chunks. Text sections (like this one) can be edited by
+modifying the source. They're written in a simple format called
+\href{https://www.markdownguide.org/basic-syntax/}{Markdown} to add
+formatting and section headings. You don't need to learn Markdown, but
+you might want to.
+
+After you edit text, you can knit the document to see the changes. (Try
+not to delete the instructions of the lab.)
+
+\textbf{Question 1.1.1.} This paragraph is in its own text section. Try
+editing it so that this sentence is the last sentence in the paragraph,
+and then knit the document. This sentence, for example, should be
+deleted. So should this one.
+
+\subsection{1.2. Code chunks}\label{code-chunks}
+
+Other sections contain code in the R language. Running a code chunk will
+execute all of the code it contains.
+
+To run the code in a code chunk, click the green ``Run Chunk'' button in
+the top right of the chunk, or place your cursor in the chunk and press
+Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac).
+
+Try running this chunk:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Hello, World!"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hello, World!"
+\end{verbatim}
+
+And this one:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"👋, 🌏!"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "👋, 🌏!"
+\end{verbatim}
+
+The fundamental building block of R code is an expression. Chunks can
+contain multiple lines with multiple expressions. When you run a chunk,
+the lines of code are executed in the order in which they appear. Every
+\texttt{print} expression prints a line. Run the next chunk and notice
+the order of the output.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"First this line is printed,"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "First this line is printed,"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"and then this one."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "and then this one."
+\end{verbatim}
+
+\textbf{Question 1.2.1.} Change the chunk above so that it prints out:
+
+\begin{verbatim}
+First this line,
+then the whole 🌏,
+and then this one.
+\end{verbatim}
+
+\emph{Hint:} If you're stuck on the Earth symbol for more than a few
+minutes, try talking to a neighbor or a staff member. That's a good idea
+for any lab problem.
+
+\subsection{1.3. Writing R Markdown
+documents}\label{writing-r-markdown-documents}
+
+You can use R Markdown documents for your own projects or documents.
+When you make your own document, you'll need to create your own chunks
+for text and code.
+
+To add a code chunk, you can use the Insert menu or press Ctrl+Alt+I
+(Cmd+Option+I on Mac), or manually add it by typing \texttt{\{r\}\ and}.
+
+\textbf{Question 1.3.1.} Add a code chunk below this section. Write code
+in it that prints out:
+
+\begin{verbatim}
+A whole new chunk! ♪🌏♪
+\end{verbatim}
+
+(That musical note symbol is like the Earth symbol. You can copy it from
+here: ♪)
+
+Run your chunk to verify that it works.
+
+\subsection{1.4. Errors}\label{errors}
+
+R is a language, and like natural human languages, it has rules. It
+differs from natural language in two important ways: 1. The rules are
+\emph{simple}. You can learn most of them in a few weeks and gain
+reasonable proficiency with the language in a semester. 2. The rules are
+\emph{rigid}. If you're proficient in a natural language, you can
+understand a non-proficient speaker, glossing over small mistakes. A
+computer running R code is not smart enough to do that.
+
+Whenever you write code, you'll make mistakes. When you run a code chunk
+that has errors, R will sometimes produce error messages to tell you
+what you did wrong.
+
+Errors are okay; even experienced programmers make many errors. When you
+make an error, you just have to find the source of the problem, fix it,
+and move on.
+
+We have made an error in the next chunk. Run it and see what happens.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"This line is missing something."}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in parse(text = input): <text>:2:0: unexpected end of input
+## 1: print("This line is missing something."
+##    ^
+\end{verbatim}
+
+\textbf{Note:} In R Markdown, you can run all chunks by clicking ``Run
+All'' in the Run menu. However, the document stops running chunks if it
+hits an error, like the one in the chunk above.
+
+You should see an error message. The error tells you that there's a
+syntax error - the structure of the code is incorrect. In this case,
+we're missing a closing parenthesis.
+
+Try to fix the code above so that you can run the chunk and see the
+intended message instead of an error.
+
+\subsection{1.5. The R Environment}\label{the-r-environment}
+
+R maintains an environment that stores all the variables and functions
+you've created. You can see what's in your environment in the
+Environment pane in RStudio, or by running \texttt{ls()}.
+
+When you run chunks, the results are stored in this environment and can
+be used by other chunks. The order in which you run chunks matters!
+
+If you run into problems where your code isn't working as expected, try
+restarting R (Session \textgreater{} Restart R) and running all chunks
+from the beginning.
+
+\subsection{1.6. Submitting Your Work}\label{submitting-your-work}
+
+All labs in the course will be distributed as R Markdown documents like
+this one, and you will submit your work by 1. knitting the document to
+HTML and submitting both the .Rmd and .html files. 2. uploading the .Rmd
+file to Brightspace.
+
+\section{2. Numbers}\label{numbers}
+
+Quantitative information arises everywhere in data science. In addition
+to representing commands to print out lines, expressions can represent
+numbers and methods of combining numbers. The expression \texttt{3.2500}
+evaluates to the number 3.25. (Run the chunk and see.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{3.2500}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.25
+\end{verbatim}
+
+Notice that we didn't have to use \texttt{print}. When you run an R
+chunk, if the last line has a value, then R helpfully prints out that
+value for you. However, it won't print out prior lines automatically.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+Above, you should see that 4 is the value of the last expression, 2 is
+printed, but 3 is lost forever because it was neither printed nor last.
+
+You don't want to print everything all the time anyway. But if you feel
+sorry for 3, change the chunk above to print it.
+
+\subsection{2.1. Arithmetic}\label{arithmetic}
+
+The line in the next chunk subtracts. Its value is what you'd expect.
+Run it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{3.25} \SpecialCharTok{{-}} \FloatTok{1.5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.75
+\end{verbatim}
+
+Many basic arithmetic operations are built into R. The common operators
+are the same as in most programming languages. The operator that might
+be different is \texttt{\^{}}, which raises one number to the power of
+the other. So, \texttt{2\^{}3} stands for \(2^3\) and evaluates to 8.
+
+The order of operations is the same as what you learned in elementary
+school, and R also has parentheses. For example, compare the outputs of
+the chunks below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{6}\SpecialCharTok{+}\DecValTok{6}\SpecialCharTok{*}\DecValTok{5{-}6}\SpecialCharTok{*}\DecValTok{3}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{*}\DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{3}\SpecialCharTok{/}\DecValTok{4}\SpecialCharTok{*}\DecValTok{7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -720
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{6}\SpecialCharTok{+}\NormalTok{(}\DecValTok{6}\SpecialCharTok{*}\DecValTok{5}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{6}\SpecialCharTok{*}\DecValTok{3}\NormalTok{))}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{*}\NormalTok{((}\DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{)}\SpecialCharTok{/}\DecValTok{4}\SpecialCharTok{*}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2022
+\end{verbatim}
+
+In standard math notation, the first expression is
+
+\[6 + 6 \times 5 - 6 \times 3^2 \times \frac{2^3}{4} \times 7,\]
+
+while the second expression is
+
+\[6 + (6 \times 5 - (6 \times 3))^2 \times \left(\frac{\left(2^3\right)}{4} \times 7\right).\]
+
+\textbf{Question 2.1.1.} Write an R expression in this next chunk that's
+equal to
+\(\displaystyle 5 \times \left(3 \frac{10}{11}\right) - 50 \frac{1}{3} + 2^{0.5 \times 22} - \frac{7}{33} + 7\).
+That's five times three and ten elevenths, minus fifty and a third, plus
+two to the power of half twenty-two, minus seven thirty-thirds plus
+seven.
+
+Replace the ellipses (\texttt{""}) with your expression. Try to use
+parentheses only when necessary.
+
+\textbf{Note:} By ``\(\displaystyle 3 \frac{10}{11}\)'', we mean
+\(\displaystyle 3+\frac{10}{11}\), not
+\(\displaystyle 3 \times \frac{10}{11}\).
+
+\emph{Hint:} The correct output should start with a familiar number.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Replace "" with your expression}
+\StringTok{""}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\section{3. Names (Variables)}\label{names-variables}
+
+In natural language, we have terminology that lets us quickly reference
+very complicated concepts. We don't say, ``That's a large mammal with
+brown fur and sharp teeth!'' Instead, we just say, ``Bear!''
+
+In R, we do this with \emph{assignment statements}. An assignment
+statement has a name on the left side of a \texttt{\textless{}-} sign
+(or \texttt{=} sign) and an expression to be evaluated on the right.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ten }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{*} \DecValTok{2} \SpecialCharTok{+} \DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+When you run that chunk, R first computes the value of the expression on
+the right-hand side, \texttt{3\ *\ 2\ +\ 4}, which is the number 10.
+Then it assigns that value to the name \texttt{ten}. At that point, the
+code in the chunk is done running.
+
+After you run that chunk, the value 10 is bound to the name
+\texttt{ten}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ten}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+The statement \texttt{ten\ \textless{}-\ 3\ *\ 2\ +\ 4} is not asserting
+that \texttt{ten} is already equal to \texttt{3\ *\ 2\ +\ 4}, as we
+might expect by analogy with math notation. Rather, that line of code
+changes what \texttt{ten} means; it now refers to the value 10, whereas
+before it meant nothing at all.
+
+If the designers of R had been ruthlessly pedantic, they might have made
+us write
+
+\begin{verbatim}
+define the name ten to hereafter have the value of 3 * 2 + 4 
+\end{verbatim}
+
+instead. You will probably appreciate the brevity of
+``\texttt{\textless{}-}''! But keep in mind that this is the real
+meaning.
+
+\textbf{Question 3.1.} Run the following chunk which uses a variable
+name \texttt{eleven} that hasn't been assigned to anything. You'll see
+an error!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eleven }\SpecialCharTok{+} \DecValTok{8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error: object 'eleven' not found
+\end{verbatim}
+
+A common pattern in R is to assign a value to a name and then
+immediately evaluate the name in the last line in the chunk so that the
+value is displayed as output.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{close\_to\_pi }\OtherTok{\textless{}{-}} \DecValTok{355}\SpecialCharTok{/}\DecValTok{113}
+\NormalTok{close\_to\_pi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.141593
+\end{verbatim}
+
+Another common pattern is that a series of lines in a single chunk will
+build up a complex computation in stages, naming the intermediate
+results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{semimonthly\_salary }\OtherTok{\textless{}{-}} \FloatTok{842.5}
+\NormalTok{monthly\_salary }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ semimonthly\_salary}
+\NormalTok{number\_of\_months\_in\_a\_year }\OtherTok{\textless{}{-}} \DecValTok{12}
+\NormalTok{yearly\_salary }\OtherTok{\textless{}{-}}\NormalTok{ number\_of\_months\_in\_a\_year }\SpecialCharTok{*}\NormalTok{ monthly\_salary}
+\NormalTok{yearly\_salary}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20220
+\end{verbatim}
+
+Names in R can have letters (upper- and lower-case letters are both okay
+and count as different letters), underscores, periods, and numbers. The
+first character can't be a number (otherwise a name might look like a
+number). And names can't contain spaces, since spaces are used to
+separate pieces of code from each other.
+
+Other than those rules, what you name something doesn't matter \emph{to
+R}. For example, this chunk does the same thing as the above chunk,
+except everything has a different name:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \FloatTok{842.5}
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ a}
+\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{12}
+\NormalTok{d }\OtherTok{\textless{}{-}}\NormalTok{ c }\SpecialCharTok{*}\NormalTok{ b}
+\NormalTok{d}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20220
+\end{verbatim}
+
+\textbf{However}, names are very important for making your code
+\emph{readable} to yourself and others. The chunk above is shorter, but
+it's totally useless without an explanation of what it does.
+
+\subsection{3.1. Checking Your Code}\label{checking-your-code}
+
+Now that you know how to name things, you can start checking whether
+your work is correct.
+
+\textbf{Question 3.1.2.} Assign the name \texttt{seconds\_in\_a\_decade}
+to the number of seconds between midnight January 1, 2010 and midnight
+January 1, 2020. Note that there are two leap years in this span of a
+decade. A non-leap year has 365 days and a leap year has 366 days.
+
+\emph{Hint:} If you're stuck, think about how many days are in the
+decade, then hours, then minutes, then seconds.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Change the next line }
+\CommentTok{\# so that it computes the number of seconds in a decade }
+\CommentTok{\# and assigns that number the name, seconds\_in\_a\_decade.}
+
+\NormalTok{seconds\_in\_a\_decade }\OtherTok{\textless{}{-}} \StringTok{""}  \CommentTok{\# Replace "" with your calculation}
+
+\CommentTok{\# We\textquotesingle{}ve put this line in this chunk }
+\CommentTok{\# so that it will print the value you\textquotesingle{}ve given to seconds\_in\_a\_decade when you run it.  }
+\CommentTok{\# You don\textquotesingle{}t need to change this.}
+\NormalTok{seconds\_in\_a\_decade}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+The correct answer should be 315532800 seconds.
+
+\section{3.2. Comments}\label{comments}
+
+You may have noticed these lines in the chunk where you answered
+Question 3.1.2:
+
+\begin{verbatim}
+# Change the next line 
+# so that it computes the number of seconds in a decade 
+# and assigns that number the name, seconds_in_a_decade.
+\end{verbatim}
+
+This is called a \emph{comment}. It doesn't make anything happen in R; R
+ignores anything on a line after a \texttt{\#}. Instead, it's there to
+communicate something about the code to you, the human reader. Comments
+are extremely useful.
+
+\subsection{3.3. Application: A Physics
+Experiment}\label{application-a-physics-experiment}
+
+On the Apollo 15 mission to the Moon, astronaut David Scott famously
+replicated Galileo's physics experiment in which he showed that gravity
+accelerates objects of different mass at the same rate. Because there is
+no air resistance for a falling object on the surface of the Moon, even
+two objects with very different masses and densities should fall at the
+same rate. David Scott compared a feather and a hammer.
+
+Here's the transcript of the video:
+
+\textbf{167:22:06 Scott}: Well, in my left hand, I have a feather; in my
+right hand, a hammer. And I guess one of the reasons we got here today
+was because of a gentleman named Galileo, a long time ago, who made a
+rather significant discovery about falling objects in gravity fields.
+And we thought where would be a better place to confirm his findings
+than on the Moon. And so we thought we'd try it here for you. The
+feather happens to be, appropriately, a falcon feather for our Falcon.
+And I'll drop the two of them here and, hopefully, they'll hit the
+ground at the same time.
+
+\textbf{167:22:43 Scott}: How about that!
+
+\textbf{167:22:45 Allen}: How about that! (Applause in Houston)
+
+\textbf{167:22:46 Scott}: Which proves that Mr.~Galileo was correct in
+his findings.
+
+\textbf{Newton's Law.} Using this footage, we can also attempt to
+confirm another famous bit of physics: Newton's law of universal
+gravitation. Newton's laws predict that any object dropped near the
+surface of the Moon should fall
+
+\[\frac{1}{2} G \frac{M}{R^2} t^2 \text{ meters}\]
+
+after \(t\) seconds, where \(G\) is a universal constant, \(M\) is the
+moon's mass in kilograms, and \(R\) is the moon's radius in meters. So
+if we know \(G\), \(M\), and \(R\), then Newton's laws let us predict
+how far an object will fall over any amount of time.
+
+To verify the accuracy of this law, we will calculate the difference
+between the predicted distance the hammer drops and the actual distance.
+(If they are different, it might be because Newton's laws are wrong, or
+because our measurements are imprecise, or because there are other
+factors affecting the hammer for which we haven't accounted.)
+
+Someone studied the video and estimated that the hammer was dropped 113
+cm from the surface. Counting frames in the video, the hammer falls for
+1.2 seconds (36 frames).
+
+\textbf{Question 3.3.1.} Complete the code in the next chunk to fill in
+the data from the experiment.
+
+\emph{Hint:} No computation required; just fill in data from the
+paragraph above.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# t, the duration of the fall in the experiment, in seconds.}
+\CommentTok{\# Fill this in.}
+\NormalTok{time }\OtherTok{\textless{}{-}} \StringTok{""}
+
+\CommentTok{\# The estimated distance the hammer actually fell, in meters.}
+\CommentTok{\# Fill this in (remember to convert from cm to meters).}
+\NormalTok{estimated\_distance\_m }\OtherTok{\textless{}{-}} \StringTok{""}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Question 3.3.2.} Now, complete the code in the next chunk to
+compute the difference between the predicted and estimated distances (in
+meters) that the hammer fell in this experiment.
+
+This just means translating the formula above
+(\(\frac{1}{2}G\frac{M}{R^2}t^2\)) into R code. You'll have to replace
+each variable in the math formula with the name we gave that number in R
+code.
+
+\emph{Hint:} Try to use variables you've already defined in question
+3.3.1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# First, we\textquotesingle{}ve written down the values of the 3 universal constants }
+\CommentTok{\# that show up in Newton\textquotesingle{}s formula.}
+
+\CommentTok{\# G, the universal constant measuring the strength of gravity.}
+\NormalTok{gravity\_constant }\OtherTok{\textless{}{-}} \FloatTok{6.674} \SpecialCharTok{*} \DecValTok{10}\SpecialCharTok{\^{}{-}}\DecValTok{11}
+
+\CommentTok{\# M, the moon\textquotesingle{}s mass, in kilograms.}
+\NormalTok{moon\_mass\_kg }\OtherTok{\textless{}{-}} \FloatTok{7.34767309} \SpecialCharTok{*} \DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{22}
+
+\CommentTok{\# R, the radius of the moon, in meters.}
+\NormalTok{moon\_radius\_m }\OtherTok{\textless{}{-}} \FloatTok{1.737} \SpecialCharTok{*} \DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{6}
+
+\CommentTok{\# The distance the hammer should have fallen }
+\CommentTok{\# over the duration of the fall, in meters, }
+\CommentTok{\# according to Newton\textquotesingle{}s law of gravity.  }
+\CommentTok{\# The text above describes the formula}
+\CommentTok{\# for this distance given by Newton\textquotesingle{}s law.}
+\CommentTok{\# **YOU FILL THIS PART IN.**}
+\NormalTok{predicted\_distance\_m }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{estimated\_distance\_m }\OtherTok{\textless{}{-}} \DecValTok{0}
+
+\CommentTok{\# Here we\textquotesingle{}ve computed the difference }
+\CommentTok{\# between the predicted fall distance and the distance we actually measured.}
+\CommentTok{\# If you\textquotesingle{}ve filled in the above code, this should just work.}
+\NormalTok{difference }\OtherTok{\textless{}{-}}\NormalTok{ predicted\_distance\_m }\SpecialCharTok{{-}}\NormalTok{ estimated\_distance\_m}
+\NormalTok{difference}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\section{4. Calling Functions}\label{calling-functions}
+
+The most common way to combine or manipulate values in R is by calling
+functions. R comes with many built-in functions that perform common
+operations.
+
+For example, the \texttt{abs} function takes a single number as its
+argument and returns the absolute value of that number. Run the next two
+chunks and see if you understand the output.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{abs}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{abs}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\subsection{4.1. Application: Computing Walking
+Distances}\label{application-computing-walking-distances}
+
+Chunhua is on the corner of 7th Avenue and 42nd Street in Midtown
+Manhattan, and she wants to know far she'd have to walk to get to
+Gramercy School on the corner of 10th Avenue and 34th Street.
+
+She can't cut across blocks diagonally, since there are buildings in the
+way. She has to walk along the sidewalks. Using the map below, she sees
+she'd have to walk 3 avenues (long blocks) and 8 streets (short blocks).
+In terms of the given numbers, she computed 3 as the difference between
+7 and 10, \emph{in absolute value}, and 8 similarly.
+
+Chunhua also knows that blocks in Manhattan are all about 80m by 274m
+(avenues are farther apart than streets). So in total, she'd have to
+walk \((80 \times |42 - 34| + 274 \times |7 - 10|)\) meters to get to
+the park.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Map}]{map.jpg}}
+\caption{Map}
+\end{figure}
+
+\textbf{Question 4.1.1.} Fill in the line
+\texttt{num\_avenues\_away\ \textless{}-\ ""} in the next chunk so that
+the chunk calculates the distance Chunhua must walk and gives it the
+name \texttt{manhattan\_distance}. Everything else has been filled in
+for you. \textbf{Use the \texttt{abs} function.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Here\textquotesingle{}s the number of streets away:}
+\NormalTok{num\_streets\_away }\OtherTok{\textless{}{-}} \FunctionTok{abs}\NormalTok{(}\DecValTok{42{-}34}\NormalTok{)}
+
+\CommentTok{\# Compute the number of avenues away in a similar way:}
+\NormalTok{num\_avenues\_away }\OtherTok{\textless{}{-}} \DecValTok{0}
+
+\NormalTok{street\_length\_m }\OtherTok{\textless{}{-}} \DecValTok{80}
+\NormalTok{avenue\_length\_m }\OtherTok{\textless{}{-}} \DecValTok{274}
+
+\CommentTok{\# Now we compute the total distance Chunhua must walk.}
+\NormalTok{manhattan\_distance }\OtherTok{\textless{}{-}}\NormalTok{ street\_length\_m}\SpecialCharTok{*}\NormalTok{num\_streets\_away }\SpecialCharTok{+}\NormalTok{ avenue\_length\_m}\SpecialCharTok{*}\NormalTok{num\_avenues\_away}
+
+\CommentTok{\# We\textquotesingle{}ve included this line so that you see the distance you\textquotesingle{}ve computed }
+\CommentTok{\# when you run this chunk.  }
+\CommentTok{\# You don\textquotesingle{}t need to change it, but you can if you want.}
+\NormalTok{manhattan\_distance}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 640
+\end{verbatim}
+
+\subparagraph{Multiple arguments}\label{multiple-arguments}
+
+Some functions take multiple arguments, separated by commas. For
+example, the built-in \texttt{max} function returns the maximum argument
+passed to it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{max}\NormalTok{(}\DecValTok{2}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\section{5. Understanding Nested
+Expressions}\label{understanding-nested-expressions}
+
+Function calls and arithmetic expressions can themselves contain
+expressions. You saw an example in the last question:
+
+\begin{verbatim}
+abs(42-34)
+\end{verbatim}
+
+has 2 number expressions in a subtraction expression in a function call
+expression. And you probably wrote something like \texttt{abs(7-10)} to
+compute \texttt{num\_avenues\_away}.
+
+Nested expressions can turn into complicated-looking code. However, the
+way in which complicated expressions break down is very regular.
+
+Suppose we are interested in lengths of cats that are very unusual.
+We'll say that a length is unusual to the extent that it's far away on
+the number line from the average cat length. An estimate of the average
+cat length (averaging, we hope, over all cats on Earth today) is
+\textbf{18.2} inches.
+
+So if Ravioli is 21.7 inches long, then her length is \(|21.7 - 18.2|\),
+or \(3.5\), inches away from the average. Here's a picture of that:
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Cat Lengths}]{cat_lengths.png}}
+\caption{Cat Lengths}
+\end{figure}
+
+The source for average cat length is
+\href{https://en.wikipedia.org/wiki/Cat\#:~:text=The\%20domestic\%20cat\%20has\%20a,(9\%20and\%2011\%20lb).}{Wikipedia}.
+The listed lengths for cats are not real and may not be plausible (but
+the names are of real cats!)
+
+And here's how we'd write that expression in one line of R code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{abs}\NormalTok{(}\FloatTok{21.7} \SpecialCharTok{{-}} \FloatTok{18.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.5
+\end{verbatim}
+
+What's going on here? \texttt{abs} takes just one argument, so the stuff
+inside the parentheses is all part of that \emph{single argument}.
+Specifically, the argument is the value of the expression
+\texttt{21.7\ -\ 18.2}. The value of that expression is \texttt{3.5}.
+That value is the argument to \texttt{abs}. The absolute value of that
+is \texttt{3.5}, so \texttt{3.5} is the value of the full expression
+\texttt{abs(21.7\ -\ 18.2)}.
+
+Picture simplifying the expression in several steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{abs(21.7\ -\ 18.2)}
+\item
+  \texttt{abs(3.5)}
+\item
+  \texttt{3.5}
+\end{enumerate}
+
+In fact, that's basically what R does to compute the value of the
+expression.
+
+\textbf{Question 5.1.} Say that Genghis's length is 16.7 inches. In the
+next chunk, use \texttt{abs} to compute the absolute value of the
+difference between Genghis's length and the average cat length. Give
+that value the name \texttt{genghis\_distance\_from\_average\_in}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Replace the "" with an expression }
+\CommentTok{\# to compute the absolute value }
+\CommentTok{\# of the difference between Genghis\textquotesingle{}s length (16.7 in) and the average cat length.}
+\NormalTok{genghis\_distance\_from\_average\_in }\OtherTok{\textless{}{-}} \StringTok{""}
+
+\CommentTok{\# Again, we\textquotesingle{}ve written this here }
+\CommentTok{\# so that the distance you compute will get printed }
+\CommentTok{\# when you run this chunk.}
+\NormalTok{genghis\_distance\_from\_average\_in}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ""
+\end{verbatim}
+
+\subsection{5.1. More Nesting}\label{more-nesting}
+
+Now say that we want to compute the more unusual of the two cat lengths.
+We'll use the function \texttt{max}, which (again) takes two numbers as
+arguments and returns the larger of the two arguments. Combining that
+with the \texttt{abs} function, we can compute the larger distance from
+average among the two lengths:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Just read and run this chunk.}
+
+\NormalTok{ravioli\_length\_in }\OtherTok{\textless{}{-}} \FloatTok{21.7}
+\NormalTok{genghis\_length\_in }\OtherTok{\textless{}{-}} \FloatTok{16.7}
+\NormalTok{average\_cat\_length }\OtherTok{\textless{}{-}} \FloatTok{18.2}
+
+\CommentTok{\# The larger distance from the average cat length, among the two lengths:}
+\NormalTok{larger\_distance\_in }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(ravioli\_length\_in }\SpecialCharTok{{-}}\NormalTok{ average\_cat\_length), }\FunctionTok{abs}\NormalTok{(genghis\_length\_in }\SpecialCharTok{{-}}\NormalTok{ average\_cat\_length))}
+
+\CommentTok{\# Print out our results in a nice readable format:}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"The larger distance from the average length among these two cats is"}\NormalTok{, larger\_distance\_in, }\StringTok{"inches."}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The larger distance from the average length among these two cats is 3.5 inches."
+\end{verbatim}
+
+The line where \texttt{larger\_distance\_in} is computed looks
+complicated, but we can break it down into simpler components just like
+we did before.
+
+The basic recipe is to repeatedly simplify small parts of the
+expression: * \textbf{Basic expressions:} Start with expressions whose
+values we know, like names or numbers. - Examples:
+\texttt{genghis\_length\_in} or \texttt{16.7}. * \textbf{Find the next
+simplest group of expressions:} Look for basic expressions that are
+directly connected to each other. This can be by arithmetic or as
+arguments to a function call. - Example:
+\texttt{genghis\_length\_in\ -\ average\_cat\_length}. *
+\textbf{Evaluate that group:} Evaluate the arithmetic expression or
+function call. Use the value computed to replace the group of
+expressions.\\
+- Example: \texttt{genghis\_length\_in\ -\ average\_cat\_length} becomes
+\texttt{-1.3}. * \textbf{Repeat:} Continue this process, using the value
+of the previously-evaluated expression as a new basic expression. Stop
+when we've evaluated the entire expression. - Example:
+\texttt{abs(-1.3)} becomes \texttt{1.3}, and \texttt{max(3.5,\ 1.3)}
+becomes \texttt{3.5}.
+
+Ok, your turn.
+
+\textbf{Question 5.1.1.} Given the lengths of Yanay's cats Hummus,
+Gatkes, and Zeepty, write an expression that computes the smallest
+difference between any of the three lengths. Your expression shouldn't
+have any numbers in it, only function calls and the names
+\texttt{hummus}, \texttt{gatkes}, and \texttt{zeepty}. Give the value of
+your expression the name \texttt{min\_length\_difference}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The three cats\textquotesingle{} lengths, in inches:}
+\NormalTok{hummus }\OtherTok{\textless{}{-}} \FloatTok{24.5}  \CommentTok{\# Hummus is 24.5 inches long}
+\NormalTok{gatkes }\OtherTok{\textless{}{-}} \FloatTok{19.7}  \CommentTok{\# Gatkes is 19.7 inches long}
+\NormalTok{zeepty }\OtherTok{\textless{}{-}} \FloatTok{15.8}  \CommentTok{\# Zeepty is 15.8 inches long}
+             
+\CommentTok{\# We\textquotesingle{}d like to look at all 3 pairs of lengths, }
+\CommentTok{\# compute the absolute difference between each pair, }
+\CommentTok{\# and then find the smallest of those 3 absolute differences.  }
+\CommentTok{\# This is left to you!  }
+\CommentTok{\# If you\textquotesingle{}re stuck, try computing the value for each step of the process }
+\CommentTok{\# (like the difference between Hummus\textquotesingle{}s length and Gatkes\textquotesingle{}s length) }
+\CommentTok{\# on a separate line and giving it a name (like hummus\_gatkes\_length\_diff)}
+\NormalTok{min\_length\_difference }\OtherTok{\textless{}{-}} \StringTok{""}
+\end{Highlighting}
+\end{Shaded}
+
+You're done with Lab 1!
+
+\textbf{Important submission information:} Be sure to run all chunks and
+verify that they work correctly, then knit your document to HTML. Submit
+both the .Rmd file and the .html file to Gradescope.
+
+Dash wants to congratulate you and welcome you to Data 8!
+
+\begin{figure}
+\centering
+\includegraphics[width=3.125in,height=\textheight,keepaspectratio,alt={Dash}]{dash.JPG}
+\caption{Dash}
+\end{figure}
+
+\end{document}

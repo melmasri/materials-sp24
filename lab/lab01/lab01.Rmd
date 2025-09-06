@@ -1,57 +1,75 @@
 ---
-title: "Lab 01: Welcome to Data Science with R"
-output: html_document
+title: 'Lab 01: Welcome to Data Science with R'
+output:
+  html_document: default
+  pdf_document: default
+editor_options:
+  markdown:
+    wrap: sentence
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-![Data 8 Logo](data8logo.png){width=15% style="float: right; padding: 1%; margin-right: 2%;"}
-
 # Welcome!
 
-Welcome to DATA1517 Each week you will complete a lab assignment like this one. You can't learn technical subjects without hands-on practice, so labs are an important part of the course.
+Welcome to DATA1517 Each week you will complete a lab assignment like this one.
+You can't learn technical subjects without hands-on practice, so labs are an important part of the course.
 
 Before we get started, there are some administrative details.
 
-The weekly lab sessions are designed to develop your skills with computational and inferential concepts. These lab assignments are a required part of the course and will be released every Monday and due next Monday at 5 PM.
+The weekly lab sessions are designed to develop your skills with computational and inferential concepts.
+These lab assignments are a required part of the course and will be released every Monday and due next Monday at 5 PM.
 
-Lab sessions are not webcast! Here are the policies for getting full credit (Lab is worth 10% of your final grade):
+Lab sessions are not webcast!
+Here are the policies for getting full credit (Lab is worth 10% of your final grade):
 
-1. If you are within regular lab, to receive credit for lab you must attend. 
+1.  If you are within regular lab, to receive credit for lab you must attend.
 
-2. If you are within the self-service lab you will have the option to complete the lab on your own and submit the completed lab by 5 PM on the due date.
+2.  If you are within the self-service lab you will have the option to complete the lab on your own and submit the completed lab by 5 PM on the due date.
 
-Collaborating on labs is more than okay -- it's encouraged! You should rarely remain stuck for more than a few minutes on questions in labs, so ask an instructor or classmate for help. (Explaining things is beneficial, too -- the best way to solidify your knowledge of a subject is to explain it.) Please don't just share answers, though.
-
+Collaborating on labs is more than okay -- it's encouraged!
+You should rarely remain stuck for more than a few minutes on questions in labs, so ask an instructor or classmate for help.
+(Explaining things is beneficial, too -- the best way to solidify your knowledge of a subject is to explain it.) Please don't just share answers, though.
 
 #### Today's lab
 
 In today's lab, you'll learn how to:
 
-1. navigate R Markdown documents (like this one);
-2. write and evaluate some basic *expressions* in R, the statistical computing language;
-3. call *functions* to use code other people have written; and
-4. break down R code into smaller parts to understand it.
+1.  navigate R Markdown documents (like this one);
+2.  write and evaluate some basic *expressions* in R, the statistical computing language;
+3.  call *functions* to use code other people have written; and
+4.  break down R code into smaller parts to understand it.
 
-This lab covers parts of [Chapter 3](http://www.inferentialthinking.com/chapters/03/programming-in-python.html) of the online textbook, adapted for R. You should read the examples in the book, but not right now. Instead, let's get started!
+This lab covers parts of [Chapter 3](http://www.inferentialthinking.com/chapters/03/programming-in-python.html) of the online textbook, adapted for R.
+You should read the examples in the book, but not right now.
+Instead, let's get started!
 
 # 1. R Markdown Documents
 
-This document is called an R Markdown document. A document is a place to write programs and view their results, and also to write text.
+This document is called an R Markdown document.
+A document is a place to write programs and view their results, and also to write text.
 
 ## 1.1. Text sections
 
-In an R Markdown document, each section containing text or code is organized into chunks. Text sections (like this one) can be edited by modifying the source. They're written in a simple format called [Markdown](https://www.markdownguide.org/basic-syntax/) to add formatting and section headings. You don't need to learn Markdown, but you might want to.
+In an R Markdown document, each section containing text or code is organized into chunks.
+Text sections (like this one) can be edited by modifying the source.
+They're written in a simple format called [Markdown](https://www.markdownguide.org/basic-syntax/) to add formatting and section headings.
+You don't need to learn Markdown, but you might want to.
 
-After you edit text, you can knit the document to see the changes. (Try not to delete the instructions of the lab.)
+After you edit text, you can knit the document to see the changes.
+(Try not to delete the instructions of the lab.)
 
-**Question 1.1.1.** This paragraph is in its own text section. Try editing it so that this sentence is the last sentence in the paragraph, and then knit the document. This sentence, for example, should be deleted. So should this one.
+**Question 1.1.1.** This paragraph is in its own text section.
+Try editing it so that this sentence is the last sentence in the paragraph, and then knit the document.
+This sentence, for example, should be deleted.
+So should this one.
 
 ## 1.2. Code chunks
 
-Other sections contain code in the R language. Running a code chunk will execute all of the code it contains.
+Other sections contain code in the R language.
+Running a code chunk will execute all of the code it contains.
 
 To run the code in a code chunk, click the green "Run Chunk" button in the top right of the chunk, or place your cursor in the chunk and press Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac).
 
@@ -67,7 +85,11 @@ And this one:
 print("👋, 🌏!")
 ```
 
-The fundamental building block of R code is an expression. Chunks can contain multiple lines with multiple expressions. When you run a chunk, the lines of code are executed in the order in which they appear. Every `print` expression prints a line. Run the next chunk and notice the order of the output.
+The fundamental building block of R code is an expression.
+Chunks can contain multiple lines with multiple expressions.
+When you run a chunk, the lines of code are executed in the order in which they appear.
+Every `print` expression prints a line.
+Run the next chunk and notice the order of the output.
 
 ```{r}
 print("First this line is printed,")
@@ -76,22 +98,28 @@ print("and then this one.")
 
 **Question 1.2.1.** Change the chunk above so that it prints out:
 
-    First this line,
-    then the whole 🌏,
-    and then this one.
+```         
+First this line,
+then the whole 🌏,
+and then this one.
+```
 
-*Hint:* If you're stuck on the Earth symbol for more than a few minutes, try talking to a neighbor or a staff member. That's a good idea for any lab problem.
+*Hint:* If you're stuck on the Earth symbol for more than a few minutes, try talking to a neighbor or a staff member.
+That's a good idea for any lab problem.
 
 ## 1.3. Writing R Markdown documents
 
-You can use R Markdown documents for your own projects or documents. When you make your own document, you'll need to create your own chunks for text and code.
+You can use R Markdown documents for your own projects or documents.
+When you make your own document, you'll need to create your own chunks for text and code.
 
-To add a code chunk, you can use the Insert menu or press Ctrl+Alt+I (Cmd+Option+I on Mac), or manually add it by typing ```{r} and ```.
+To add a code chunk, you can use the Insert menu or press Ctrl+Alt+I (Cmd+Option+I on Mac), or manually add it by typing `{r} and`.
 
+**Question 1.3.1.** Add a code chunk below this section.
+Write code in it that prints out:
 
-**Question 1.3.1.** Add a code chunk below this section. Write code in it that prints out:
-   
-    A whole new chunk! ♪🌏♪
+```         
+A whole new chunk! ♪🌏♪
+```
 
 (That musical note symbol is like the Earth symbol. You can copy it from here: ♪)
 
@@ -99,49 +127,68 @@ Run your chunk to verify that it works.
 
 ## 1.4. Errors
 
-R is a language, and like natural human languages, it has rules. It differs from natural language in two important ways:
-1. The rules are *simple*. You can learn most of them in a few weeks and gain reasonable proficiency with the language in a semester.
-2. The rules are *rigid*. If you're proficient in a natural language, you can understand a non-proficient speaker, glossing over small mistakes. A computer running R code is not smart enough to do that.
+R is a language, and like natural human languages, it has rules.
+It differs from natural language in two important ways: 1.
+The rules are *simple*.
+You can learn most of them in a few weeks and gain reasonable proficiency with the language in a semester.
+2.
+The rules are *rigid*.
+If you're proficient in a natural language, you can understand a non-proficient speaker, glossing over small mistakes.
+A computer running R code is not smart enough to do that.
 
-Whenever you write code, you'll make mistakes. When you run a code chunk that has errors, R will sometimes produce error messages to tell you what you did wrong.
+Whenever you write code, you'll make mistakes.
+When you run a code chunk that has errors, R will sometimes produce error messages to tell you what you did wrong.
 
-Errors are okay; even experienced programmers make many errors. When you make an error, you just have to find the source of the problem, fix it, and move on.
+Errors are okay; even experienced programmers make many errors.
+When you make an error, you just have to find the source of the problem, fix it, and move on.
 
-We have made an error in the next chunk. Run it and see what happens.
+We have made an error in the next chunk.
+Run it and see what happens.
 
 ```{r error=TRUE}
 print("This line is missing something."
 ```
 
-**Note:** In R Markdown, you can run all chunks by clicking "Run All" in the Run menu. However, the document stops running chunks if it hits an error, like the one in the chunk above.
+**Note:** In R Markdown, you can run all chunks by clicking "Run All" in the Run menu.
+However, the document stops running chunks if it hits an error, like the one in the chunk above.
 
-You should see an error message. The error tells you that there's a syntax error - the structure of the code is incorrect. In this case, we're missing a closing parenthesis.
+You should see an error message.
+The error tells you that there's a syntax error - the structure of the code is incorrect.
+In this case, we're missing a closing parenthesis.
 
 Try to fix the code above so that you can run the chunk and see the intended message instead of an error.
 
 ## 1.5. The R Environment
 
-R maintains an environment that stores all the variables and functions you've created. You can see what's in your environment in the Environment pane in RStudio, or by running `ls()`.
+R maintains an environment that stores all the variables and functions you've created.
+You can see what's in your environment in the Environment pane in RStudio, or by running `ls()`.
 
-When you run chunks, the results are stored in this environment and can be used by other chunks. The order in which you run chunks matters!
+When you run chunks, the results are stored in this environment and can be used by other chunks.
+The order in which you run chunks matters!
 
-If you run into problems where your code isn't working as expected, try restarting R (Session > Restart R) and running all chunks from the beginning.
+If you run into problems where your code isn't working as expected, try restarting R (Session \> Restart R) and running all chunks from the beginning.
 
 ## 1.6. Submitting Your Work
 
-All labs in the course will be distributed as R Markdown documents like this one, and you will submit your work by 
-1. knitting the document to HTML and submitting both the .Rmd and .html files.
-2. uploading the .Rmd file to Brightspace.
+All labs in the course will be distributed as R Markdown documents like this one, and you will submit your work by 1.
+knitting the document to HTML and submitting both the .Rmd and .html files.
+2.
+uploading the .Rmd file to Brightspace.
 
 # 2. Numbers
 
-Quantitative information arises everywhere in data science. In addition to representing commands to print out lines, expressions can represent numbers and methods of combining numbers. The expression `3.2500` evaluates to the number 3.25. (Run the chunk and see.)
+Quantitative information arises everywhere in data science.
+In addition to representing commands to print out lines, expressions can represent numbers and methods of combining numbers.
+The expression `3.2500` evaluates to the number 3.25.
+(Run the chunk and see.)
 
 ```{r}
 3.2500
 ```
 
-Notice that we didn't have to use `print`. When you run an R chunk, if the last line has a value, then R helpfully prints out that value for you. However, it won't print out prior lines automatically.
+Notice that we didn't have to use `print`.
+When you run an R chunk, if the last line has a value, then R helpfully prints out that value for you.
+However, it won't print out prior lines automatically.
 
 ```{r}
 print(2)
@@ -151,19 +198,26 @@ print(2)
 
 Above, you should see that 4 is the value of the last expression, 2 is printed, but 3 is lost forever because it was neither printed nor last.
 
-You don't want to print everything all the time anyway. But if you feel sorry for 3, change the chunk above to print it.
+You don't want to print everything all the time anyway.
+But if you feel sorry for 3, change the chunk above to print it.
 
 ## 2.1. Arithmetic
 
-The line in the next chunk subtracts. Its value is what you'd expect. Run it.
+The line in the next chunk subtracts.
+Its value is what you'd expect.
+Run it.
 
 ```{r}
 3.25 - 1.5
 ```
 
-Many basic arithmetic operations are built into R. The common operators are the same as in most programming languages. The operator that might be different is `^`, which raises one number to the power of the other. So, `2^3` stands for $2^3$ and evaluates to 8.
+Many basic arithmetic operations are built into R.
+The common operators are the same as in most programming languages.
+The operator that might be different is `^`, which raises one number to the power of the other.
+So, `2^3` stands for $2^3$ and evaluates to 8.
 
-The order of operations is the same as what you learned in elementary school, and R also has parentheses. For example, compare the outputs of the chunks below:
+The order of operations is the same as what you learned in elementary school, and R also has parentheses.
+For example, compare the outputs of the chunks below:
 
 ```{r}
 6+6*5-6*3^2*2^3/4*7
@@ -181,9 +235,11 @@ while the second expression is
 
 $$6 + (6 \times 5 - (6 \times 3))^2 \times \left(\frac{\left(2^3\right)}{4} \times 7\right).$$
 
-**Question 2.1.1.** Write an R expression in this next chunk that's equal to $\displaystyle 5 \times \left(3 \frac{10}{11}\right) - 50 \frac{1}{3} + 2^{0.5 \times 22} - \frac{7}{33} + 7$. That's five times three and ten elevenths, minus fifty and a third, plus two to the power of half twenty-two, minus seven thirty-thirds plus seven.
+**Question 2.1.1.** Write an R expression in this next chunk that's equal to $\displaystyle 5 \times \left(3 \frac{10}{11}\right) - 50 \frac{1}{3} + 2^{0.5 \times 22} - \frac{7}{33} + 7$.
+That's five times three and ten elevenths, minus fifty and a third, plus two to the power of half twenty-two, minus seven thirty-thirds plus seven.
 
-Replace the ellipses (`""`) with your expression. Try to use parentheses only when necessary.
+Replace the ellipses (`""`) with your expression.
+Try to use parentheses only when necessary.
 
 **Note:** By "$\displaystyle 3 \frac{10}{11}$", we mean $\displaystyle 3+\frac{10}{11}$, not $\displaystyle 3 \times \frac{10}{11}$.
 
@@ -196,15 +252,19 @@ Replace the ellipses (`""`) with your expression. Try to use parentheses only wh
 
 # 3. Names (Variables)
 
-In natural language, we have terminology that lets us quickly reference very complicated concepts. We don't say, "That's a large mammal with brown fur and sharp teeth!" Instead, we just say, "Bear!"
+In natural language, we have terminology that lets us quickly reference very complicated concepts.
+We don't say, "That's a large mammal with brown fur and sharp teeth!" Instead, we just say, "Bear!"
 
-In R, we do this with *assignment statements*. An assignment statement has a name on the left side of a `<-` sign (or `=` sign) and an expression to be evaluated on the right.
+In R, we do this with *assignment statements*.
+An assignment statement has a name on the left side of a `<-` sign (or `=` sign) and an expression to be evaluated on the right.
 
 ```{r}
 ten <- 3 * 2 + 4
 ```
 
-When you run that chunk, R first computes the value of the expression on the right-hand side, `3 * 2 + 4`, which is the number 10. Then it assigns that value to the name `ten`. At that point, the code in the chunk is done running.
+When you run that chunk, R first computes the value of the expression on the right-hand side, `3 * 2 + 4`, which is the number 10.
+Then it assigns that value to the name `ten`.
+At that point, the code in the chunk is done running.
 
 After you run that chunk, the value 10 is bound to the name `ten`:
 
@@ -212,15 +272,21 @@ After you run that chunk, the value 10 is bound to the name `ten`:
 ten
 ```
 
-The statement `ten <- 3 * 2 + 4` is not asserting that `ten` is already equal to `3 * 2 + 4`, as we might expect by analogy with math notation. Rather, that line of code changes what `ten` means; it now refers to the value 10, whereas before it meant nothing at all.
+The statement `ten <- 3 * 2 + 4` is not asserting that `ten` is already equal to `3 * 2 + 4`, as we might expect by analogy with math notation.
+Rather, that line of code changes what `ten` means; it now refers to the value 10, whereas before it meant nothing at all.
 
 If the designers of R had been ruthlessly pedantic, they might have made us write
 
-    define the name ten to hereafter have the value of 3 * 2 + 4 
+```         
+define the name ten to hereafter have the value of 3 * 2 + 4 
+```
 
-instead. You will probably appreciate the brevity of "`<-`"! But keep in mind that this is the real meaning.
+instead.
+You will probably appreciate the brevity of "`<-`"!
+But keep in mind that this is the real meaning.
 
-**Question 3.1.** Run the following chunk which uses a variable name `eleven` that hasn't been assigned to anything. You'll see an error!
+**Question 3.1.** Run the following chunk which uses a variable name `eleven` that hasn't been assigned to anything.
+You'll see an error!
 
 ```{r error=TRUE}
 eleven + 8
@@ -243,9 +309,12 @@ yearly_salary <- number_of_months_in_a_year * monthly_salary
 yearly_salary
 ```
 
-Names in R can have letters (upper- and lower-case letters are both okay and count as different letters), underscores, periods, and numbers. The first character can't be a number (otherwise a name might look like a number). And names can't contain spaces, since spaces are used to separate pieces of code from each other.
+Names in R can have letters (upper- and lower-case letters are both okay and count as different letters), underscores, periods, and numbers.
+The first character can't be a number (otherwise a name might look like a number).
+And names can't contain spaces, since spaces are used to separate pieces of code from each other.
 
-Other than those rules, what you name something doesn't matter *to R*. For example, this chunk does the same thing as the above chunk, except everything has a different name:
+Other than those rules, what you name something doesn't matter *to R*.
+For example, this chunk does the same thing as the above chunk, except everything has a different name:
 
 ```{r}
 a <- 842.5
@@ -255,13 +324,16 @@ d <- c * b
 d
 ```
 
-**However**, names are very important for making your code *readable* to yourself and others. The chunk above is shorter, but it's totally useless without an explanation of what it does.
+**However**, names are very important for making your code *readable* to yourself and others.
+The chunk above is shorter, but it's totally useless without an explanation of what it does.
 
 ## 3.1. Checking Your Code
 
-Now that you know how to name things, you can start checking whether your work is correct. 
+Now that you know how to name things, you can start checking whether your work is correct.
 
-**Question 3.1.2.** Assign the name `seconds_in_a_decade` to the number of seconds between midnight January 1, 2010 and midnight January 1, 2020. Note that there are two leap years in this span of a decade. A non-leap year has 365 days and a leap year has 366 days.
+**Question 3.1.2.** Assign the name `seconds_in_a_decade` to the number of seconds between midnight January 1, 2010 and midnight January 1, 2020.
+Note that there are two leap years in this span of a decade.
+A non-leap year has 365 days and a leap year has 366 days.
 
 *Hint:* If you're stuck, think about how many days are in the decade, then hours, then minutes, then seconds.
 
@@ -284,35 +356,52 @@ The correct answer should be 315532800 seconds.
 
 You may have noticed these lines in the chunk where you answered Question 3.1.2:
 
-    # Change the next line 
-    # so that it computes the number of seconds in a decade 
-    # and assigns that number the name, seconds_in_a_decade.
-    
-This is called a *comment*. It doesn't make anything happen in R; R ignores anything on a line after a `#`. Instead, it's there to communicate something about the code to you, the human reader. Comments are extremely useful.
+```         
+# Change the next line 
+# so that it computes the number of seconds in a decade 
+# and assigns that number the name, seconds_in_a_decade.
+```
+
+This is called a *comment*.
+It doesn't make anything happen in R; R ignores anything on a line after a `#`.
+Instead, it's there to communicate something about the code to you, the human reader.
+Comments are extremely useful.
 
 ## 3.3. Application: A Physics Experiment
 
-On the Apollo 15 mission to the Moon, astronaut David Scott famously replicated Galileo's physics experiment in which he showed that gravity accelerates objects of different mass at the same rate. Because there is no air resistance for a falling object on the surface of the Moon, even two objects with very different masses and densities should fall at the same rate. David Scott compared a feather and a hammer.
+On the Apollo 15 mission to the Moon, astronaut David Scott famously replicated Galileo's physics experiment in which he showed that gravity accelerates objects of different mass at the same rate.
+Because there is no air resistance for a falling object on the surface of the Moon, even two objects with very different masses and densities should fall at the same rate.
+David Scott compared a feather and a hammer.
 
 Here's the transcript of the video:
 
-**167:22:06 Scott**: Well, in my left hand, I have a feather; in my right hand, a hammer. And I guess one of the reasons we got here today was because of a gentleman named Galileo, a long time ago, who made a rather significant discovery about falling objects in gravity fields. And we thought where would be a better place to confirm his findings than on the Moon. And so we thought we'd try it here for you. The feather happens to be, appropriately, a falcon feather for our Falcon. And I'll drop the two of them here and, hopefully, they'll hit the ground at the same time. 
+**167:22:06 Scott**: Well, in my left hand, I have a feather; in my right hand, a hammer.
+And I guess one of the reasons we got here today was because of a gentleman named Galileo, a long time ago, who made a rather significant discovery about falling objects in gravity fields.
+And we thought where would be a better place to confirm his findings than on the Moon.
+And so we thought we'd try it here for you.
+The feather happens to be, appropriately, a falcon feather for our Falcon.
+And I'll drop the two of them here and, hopefully, they'll hit the ground at the same time.
 
 **167:22:43 Scott**: How about that!
 
-**167:22:45 Allen**: How about that! (Applause in Houston)
+**167:22:45 Allen**: How about that!
+(Applause in Houston)
 
 **167:22:46 Scott**: Which proves that Mr. Galileo was correct in his findings.
 
-**Newton's Law.** Using this footage, we can also attempt to confirm another famous bit of physics: Newton's law of universal gravitation. Newton's laws predict that any object dropped near the surface of the Moon should fall
+**Newton's Law.** Using this footage, we can also attempt to confirm another famous bit of physics: Newton's law of universal gravitation.
+Newton's laws predict that any object dropped near the surface of the Moon should fall
 
 $$\frac{1}{2} G \frac{M}{R^2} t^2 \text{ meters}$$
 
-after $t$ seconds, where $G$ is a universal constant, $M$ is the moon's mass in kilograms, and $R$ is the moon's radius in meters. So if we know $G$, $M$, and $R$, then Newton's laws let us predict how far an object will fall over any amount of time.
+after $t$ seconds, where $G$ is a universal constant, $M$ is the moon's mass in kilograms, and $R$ is the moon's radius in meters.
+So if we know $G$, $M$, and $R$, then Newton's laws let us predict how far an object will fall over any amount of time.
 
-To verify the accuracy of this law, we will calculate the difference between the predicted distance the hammer drops and the actual distance. (If they are different, it might be because Newton's laws are wrong, or because our measurements are imprecise, or because there are other factors affecting the hammer for which we haven't accounted.)
+To verify the accuracy of this law, we will calculate the difference between the predicted distance the hammer drops and the actual distance.
+(If they are different, it might be because Newton's laws are wrong, or because our measurements are imprecise, or because there are other factors affecting the hammer for which we haven't accounted.)
 
-Someone studied the video and estimated that the hammer was dropped 113 cm from the surface. Counting frames in the video, the hammer falls for 1.2 seconds (36 frames).
+Someone studied the video and estimated that the hammer was dropped 113 cm from the surface.
+Counting frames in the video, the hammer falls for 1.2 seconds (36 frames).
 
 **Question 3.3.1.** Complete the code in the next chunk to fill in the data from the experiment.
 
@@ -330,7 +419,8 @@ estimated_distance_m <- ""
 
 **Question 3.3.2.** Now, complete the code in the next chunk to compute the difference between the predicted and estimated distances (in meters) that the hammer fell in this experiment.
 
-This just means translating the formula above ($\frac{1}{2}G\frac{M}{R^2}t^2$) into R code. You'll have to replace each variable in the math formula with the name we gave that number in R code.
+This just means translating the formula above ($\frac{1}{2}G\frac{M}{R^2}t^2$) into R code.
+You'll have to replace each variable in the math formula with the name we gave that number in R code.
 
 *Hint:* Try to use variables you've already defined in question 3.3.1
 
@@ -365,9 +455,11 @@ difference
 
 # 4. Calling Functions
 
-The most common way to combine or manipulate values in R is by calling functions. R comes with many built-in functions that perform common operations.
+The most common way to combine or manipulate values in R is by calling functions.
+R comes with many built-in functions that perform common operations.
 
-For example, the `abs` function takes a single number as its argument and returns the absolute value of that number. Run the next two chunks and see if you understand the output.
+For example, the `abs` function takes a single number as its argument and returns the absolute value of that number.
+Run the next two chunks and see if you understand the output.
 
 ```{r}
 abs(5)
@@ -381,13 +473,19 @@ abs(-5)
 
 Chunhua is on the corner of 7th Avenue and 42nd Street in Midtown Manhattan, and she wants to know far she'd have to walk to get to Gramercy School on the corner of 10th Avenue and 34th Street.
 
-She can't cut across blocks diagonally, since there are buildings in the way. She has to walk along the sidewalks. Using the map below, she sees she'd have to walk 3 avenues (long blocks) and 8 streets (short blocks). In terms of the given numbers, she computed 3 as the difference between 7 and 10, *in absolute value*, and 8 similarly.
+She can't cut across blocks diagonally, since there are buildings in the way.
+She has to walk along the sidewalks.
+Using the map below, she sees she'd have to walk 3 avenues (long blocks) and 8 streets (short blocks).
+In terms of the given numbers, she computed 3 as the difference between 7 and 10, *in absolute value*, and 8 similarly.
 
-Chunhua also knows that blocks in Manhattan are all about 80m by 274m (avenues are farther apart than streets). So in total, she'd have to walk $(80 \times |42 - 34| + 274 \times |7 - 10|)$ meters to get to the park.
+Chunhua also knows that blocks in Manhattan are all about 80m by 274m (avenues are farther apart than streets).
+So in total, she'd have to walk $(80 \times |42 - 34| + 274 \times |7 - 10|)$ meters to get to the park.
 
 ![Map](map.jpg)
 
-**Question 4.1.1.** Fill in the line `num_avenues_away <- ""` in the next chunk so that the chunk calculates the distance Chunhua must walk and gives it the name `manhattan_distance`. Everything else has been filled in for you. **Use the `abs` function.**
+**Question 4.1.1.** Fill in the line `num_avenues_away <- ""` in the next chunk so that the chunk calculates the distance Chunhua must walk and gives it the name `manhattan_distance`.
+Everything else has been filled in for you.
+**Use the `abs` function.**
 
 ```{r}
 # Here's the number of streets away:
@@ -410,7 +508,8 @@ manhattan_distance
 
 ##### Multiple arguments
 
-Some functions take multiple arguments, separated by commas. For example, the built-in `max` function returns the maximum argument passed to it.
+Some functions take multiple arguments, separated by commas.
+For example, the built-in `max` function returns the maximum argument passed to it.
 
 ```{r}
 max(2, -3, 4, -5)
@@ -418,21 +517,30 @@ max(2, -3, 4, -5)
 
 # 5. Understanding Nested Expressions
 
-Function calls and arithmetic expressions can themselves contain expressions. You saw an example in the last question:
+Function calls and arithmetic expressions can themselves contain expressions.
+You saw an example in the last question:
 
-    abs(42-34)
+```         
+abs(42-34)
+```
 
-has 2 number expressions in a subtraction expression in a function call expression. And you probably wrote something like `abs(7-10)` to compute `num_avenues_away`.
+has 2 number expressions in a subtraction expression in a function call expression.
+And you probably wrote something like `abs(7-10)` to compute `num_avenues_away`.
 
-Nested expressions can turn into complicated-looking code. However, the way in which complicated expressions break down is very regular.
+Nested expressions can turn into complicated-looking code.
+However, the way in which complicated expressions break down is very regular.
 
-Suppose we are interested in lengths of cats that are very unusual. We'll say that a length is unusual to the extent that it's far away on the number line from the average cat length. An estimate of the average cat length (averaging, we hope, over all cats on Earth today) is **18.2** inches.
+Suppose we are interested in lengths of cats that are very unusual.
+We'll say that a length is unusual to the extent that it's far away on the number line from the average cat length.
+An estimate of the average cat length (averaging, we hope, over all cats on Earth today) is **18.2** inches.
 
-So if Ravioli is 21.7 inches long, then her length is $|21.7 - 18.2|$, or $3.5$, inches away from the average. Here's a picture of that:
+So if Ravioli is 21.7 inches long, then her length is $|21.7 - 18.2|$, or $3.5$, inches away from the average.
+Here's a picture of that:
 
 ![Cat Lengths](cat_lengths.png)
 
-The source for average cat length is [Wikipedia](https://en.wikipedia.org/wiki/Cat#:~:text=The%20domestic%20cat%20has%20a,(9%20and%2011%20lb).). The listed lengths for cats are not real and may not be plausible (but the names are of real cats!)
+The source for average cat length is [Wikipedia](https://en.wikipedia.org/wiki/Cat#:~:text=The%20domestic%20cat%20has%20a,(9%20and%2011%20lb).).
+The listed lengths for cats are not real and may not be plausible (but the names are of real cats!)
 
 And here's how we'd write that expression in one line of R code:
 
@@ -440,17 +548,24 @@ And here's how we'd write that expression in one line of R code:
 abs(21.7 - 18.2)
 ```
 
-What's going on here? `abs` takes just one argument, so the stuff inside the parentheses is all part of that *single argument*. Specifically, the argument is the value of the expression `21.7 - 18.2`. The value of that expression is `3.5`. That value is the argument to `abs`. The absolute value of that is `3.5`, so `3.5` is the value of the full expression `abs(21.7 - 18.2)`.
+What's going on here?
+`abs` takes just one argument, so the stuff inside the parentheses is all part of that *single argument*.
+Specifically, the argument is the value of the expression `21.7 - 18.2`.
+The value of that expression is `3.5`.
+That value is the argument to `abs`.
+The absolute value of that is `3.5`, so `3.5` is the value of the full expression `abs(21.7 - 18.2)`.
 
 Picture simplifying the expression in several steps:
 
-1. `abs(21.7 - 18.2)`
-2. `abs(3.5)`
-3. `3.5`
+1.  `abs(21.7 - 18.2)`
+2.  `abs(3.5)`
+3.  `3.5`
 
 In fact, that's basically what R does to compute the value of the expression.
 
-**Question 5.1.** Say that Genghis's length is 16.7 inches. In the next chunk, use `abs` to compute the absolute value of the difference between Genghis's length and the average cat length. Give that value the name `genghis_distance_from_average_in`.
+**Question 5.1.** Say that Genghis's length is 16.7 inches.
+In the next chunk, use `abs` to compute the absolute value of the difference between Genghis's length and the average cat length.
+Give that value the name `genghis_distance_from_average_in`.
 
 ```{r}
 # Replace the "" with an expression 
@@ -466,7 +581,9 @@ genghis_distance_from_average_in
 
 ## 5.1. More Nesting
 
-Now say that we want to compute the more unusual of the two cat lengths. We'll use the function `max`, which (again) takes two numbers as arguments and returns the larger of the two arguments. Combining that with the `abs` function, we can compute the larger distance from average among the two lengths:
+Now say that we want to compute the more unusual of the two cat lengths.
+We'll use the function `max`, which (again) takes two numbers as arguments and returns the larger of the two arguments.
+Combining that with the `abs` function, we can compute the larger distance from average among the two lengths:
 
 ```{r}
 # Just read and run this chunk.
@@ -484,19 +601,23 @@ print(paste("The larger distance from the average length among these two cats is
 
 The line where `larger_distance_in` is computed looks complicated, but we can break it down into simpler components just like we did before.
 
-The basic recipe is to repeatedly simplify small parts of the expression:
-* **Basic expressions:** Start with expressions whose values we know, like names or numbers.
-    - Examples: `genghis_length_in` or `16.7`.
-* **Find the next simplest group of expressions:** Look for basic expressions that are directly connected to each other. This can be by arithmetic or as arguments to a function call. 
-    - Example: `genghis_length_in - average_cat_length`.
-* **Evaluate that group:** Evaluate the arithmetic expression or function call. Use the value computed to replace the group of expressions.  
-    - Example: `genghis_length_in - average_cat_length` becomes `-1.3`.
-* **Repeat:** Continue this process, using the value of the previously-evaluated expression as a new basic expression. Stop when we've evaluated the entire expression.
-    - Example: `abs(-1.3)` becomes `1.3`, and `max(3.5, 1.3)` becomes `3.5`.
+The basic recipe is to repeatedly simplify small parts of the expression: \* **Basic expressions:** Start with expressions whose values we know, like names or numbers.
+- Examples: `genghis_length_in` or `16.7`.
+\* **Find the next simplest group of expressions:** Look for basic expressions that are directly connected to each other.
+This can be by arithmetic or as arguments to a function call.
+- Example: `genghis_length_in - average_cat_length`.
+\* **Evaluate that group:** Evaluate the arithmetic expression or function call.
+Use the value computed to replace the group of expressions.\
+- Example: `genghis_length_in - average_cat_length` becomes `-1.3`.
+\* **Repeat:** Continue this process, using the value of the previously-evaluated expression as a new basic expression.
+Stop when we've evaluated the entire expression.
+- Example: `abs(-1.3)` becomes `1.3`, and `max(3.5, 1.3)` becomes `3.5`.
 
 Ok, your turn.
 
-**Question 5.1.1.** Given the lengths of Yanay's cats Hummus, Gatkes, and Zeepty, write an expression that computes the smallest difference between any of the three lengths. Your expression shouldn't have any numbers in it, only function calls and the names `hummus`, `gatkes`, and `zeepty`. Give the value of your expression the name `min_length_difference`.
+**Question 5.1.1.** Given the lengths of Yanay's cats Hummus, Gatkes, and Zeepty, write an expression that computes the smallest difference between any of the three lengths.
+Your expression shouldn't have any numbers in it, only function calls and the names `hummus`, `gatkes`, and `zeepty`.
+Give the value of your expression the name `min_length_difference`.
 
 ```{r}
 # The three cats' lengths, in inches:
@@ -516,8 +637,9 @@ min_length_difference <- ""
 
 You're done with Lab 1!
 
-**Important submission information:** Be sure to run all chunks and verify that they work correctly, then knit your document to HTML. Submit both the .Rmd file and the .html file to Gradescope.
+**Important submission information:** Be sure to run all chunks and verify that they work correctly, then knit your document to HTML.
+Submit both the .Rmd file and the .html file to Gradescope.
 
 Dash wants to congratulate you and welcome you to Data 8!
 
-![Dash](dash.JPG){width=300px}
+![Dash](dash.JPG){width="300px"}

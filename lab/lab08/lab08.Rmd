@@ -1,0 +1,373 @@
+---
+title: "Lab 8: Normal Distribution and Variability of Sample Means"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Lab 8: Normal Distribution and Variability of Sample Means
+
+Welcome to Lab 8!
+
+In today's lab, we will learn about [the variability of sample means](https://inferentialthinking.com/chapters/14/5/Variability_of_the_Sample_Mean.html) as well as [the normal distribution](https://www.inferentialthinking.com/chapters/14/3/SD_and_the_Normal_Curve.html).
+
+Let's begin by setting up the libraries and imports:
+
+```{r imports}
+# Load required libraries
+# Using base R functions only
+```
+
+# 1. Normal Distributions
+
+When we visualize the distribution of a sample, we are often interested in the mean and the standard deviation of the sample (for the rest of this lab, we will abbreviate "standard deviation" as "SD"). These two sample statistics can give us a bird's eye view of the distribution -- by letting us know where the distribution sits on the number line and how spread out it is, respectively.
+
+We want to check if the data is linearly related, so we should look at the data.
+
+First, let's load in the `births` table from lecture, which is a large random sample of US births and includes information about mother-child pairs.
+
+```{r load_births}
+births <- read.csv('baby.csv')
+head(births)
+```
+
+**Question 1.1.** **Now, write a line of code to plot the distribution of mother's ages from the `births` table.** Don't change the last line, which will plot the mean of the sample on the distribution itself.
+
+```{r q1_1}
+# Your code here - create a histogram of Maternal Age
+# use hist()
+
+
+# Do not change anything below this line
+maternal_age_mean <- mean(births$Maternal.Age)
+abline(v = maternal_age_mean, col = "red", lty = 1)
+print(paste("Mean maternal age:", round(maternal_age_mean, 2)))
+```
+
+From the plot above, we can see that the mean is the center of gravity or balance point of the distribution. If you cut the distribution out of cardboard, and then placed your finger at the mean, the distribution would perfectly balance on your finger. Since the distribution above is right skewed (which means it has a long right tail), we know that the mean of the distribution is larger than the median, which is the "halfway" point of the data. Conversely, if the distribution had been left skewed, we know the mean would be smaller than the median.
+
+**Question 1.2.** Run the following cell to compare the mean (red) and median (blue) of the distribution of mothers ages.
+
+```{r q1_2}
+maternal_age_median <- median(births$Maternal.Age)
+
+# Create histogram with base R
+hist(births$Maternal.Age, breaks = 30, freq = FALSE, 
+     main = "Distribution of Maternal Age", 
+     xlab = "Maternal Age", ylab = "Density",
+     col = "lightblue", border = "white")
+
+# Add mean and median lines
+abline(v = maternal_age_mean, col = "red", lwd = 2)
+abline(v = maternal_age_median, col = "blue", lwd = 2)
+
+# Add legend
+legend("topright", legend = c("Mean", "Median"), 
+       col = c("red", "blue"), lwd = 2)
+```
+
+We are also interested in the standard deviation of mother's ages. The SD gives us a sense of how variable mothers' ages are around the average mothers' age. If the SD is large, then the mothers' ages should spread over a large range from the mean. If the SD is small, then the mothers' ages should be tightly clustered around the average mother age.
+
+**The SD of an array is defined as the "root mean square of the deviations" where the deviations are the difference between the original elements and their average.**
+
+You can read more about Variability and SD in [Chapter 14.2](https://inferentialthinking.com/chapters/14/2/Variability.html). This chapter also goes a bit more into detail about how "root mean square of the deviations" is calculated. Fun fact! σ (Greek letter sigma) is used to represent the SD and μ (Greek letter mu) is used for the mean.
+
+**Question 1.3.** Assign `age_mean` to the mean of the maternal ages and `age_sd` to the SD of the maternal ages. Then run the cell below to see the width of one SD (blue) from the sample mean (red) plotted on the histogram of maternal ages.
+
+*Hint*: `sd()` might be useful here.
+
+```{r q1_3}
+age_mean <- 0
+age_sd <- 0
+
+# Create histogram with base R
+hist(births$Maternal.Age, breaks = 30, freq = FALSE, 
+     main = "Distribution of Maternal Age with Mean and SD", 
+     xlab = "Maternal Age", ylab = "Density",
+     col = "lightblue", border = "white")
+
+# Add mean and SD lines
+abline(v = age_mean, col = "red", lwd = 2)
+abline(v = age_mean + age_sd, col = "blue", lwd = 2)
+abline(v = age_mean - age_sd, col = "blue", lwd = 2)
+
+# Add legend
+legend("topright", legend = c("Mean", "±1 SD"), 
+       col = c("red", "blue"), lwd = 2)
+# Test values
+cat("Age mean:", round(age_mean, 3), "\n")
+cat("Age SD:", round(age_sd, 3), "\n")
+```
+
+```{r q1_3_test}
+stopifnot(round(age_mean, 3) == 27.228)
+stopifnot(round(age_sd, 3) == 5.815)
+```
+
+In this histogram, the standard deviation is not easy to identify just by looking at the graph.
+
+However, the distributions of some variables allow us to easily spot the standard deviation on the plot. For example, if a sample follows a [**normal distribution**](https://inferentialthinking.com/chapters/14/3/SD_and_the_Normal_Curve.html), the standard deviation is easily spotted at the point of inflection (the point where the curve begins to change the direction of its curvature) of the distribution.
+
+**Question 1.4.** Fill in the following code to examine the distribution of maternal heights, which is roughly normally distributed. We'll plot the standard deviation on the histogram, as before - notice where one standard deviation (blue) away from the mean (red) falls on the plot.
+
+```{r q1_4}
+height_mean <- 0
+height_sd <- 0
+
+# Create histogram with base R
+hist(births$Maternal.Height,breaks=20, freq = FALSE, 
+     main = "Distribution of Maternal Height with Mean and SD", 
+     xlab = "Maternal Height", ylab = "Density",
+     col = "lightblue", border = "white")
+
+# Add mean and SD lines
+abline(v = height_mean, col = "red", lwd = 2)
+abline(v = height_mean + height_sd, col = "blue", lwd = 2)
+abline(v = height_mean - height_sd, col = "blue", lwd = 2)
+
+# Add legend
+legend("topright", legend = c("Mean", "±1 SD"), 
+       col = c("red", "blue"), lwd = 2)
+
+# Test values
+cat("Height mean:", round(height_mean, 3), "\n")
+cat("Height SD:", round(height_sd, 3), "\n")
+```
+
+```{r q1_3_test}
+stopifnot(round(height_mean, 3) == 64.049)
+stopifnot(round(height_sd, 3) == 2.526)
+```
+
+We don't always know how a variable will be distributed, and making assumptions about whether or not a variable will follow a normal distribution is dangerous. However, the **Central Limit Theorem** defines one distribution that always follows a normal distribution. **The distribution of the *sums* and *means* of all large random samples drawn with replacement (and thus are independent from one another) from a single distribution (regardless of the distribution's original shape) will be normally distributed.** Remember that the Central Limit Theorem refers to the distribution of a *statistic* calculated from a distribution, not the distribution of the original sample or population. If this is confusing, ask a staff member!
+
+The next section will explore distributions of sample means, and you will see how the standard deviation of these distributions depends on sample sizes.
+
+# 2. Variability of the Sample Mean
+
+By the [Central Limit Theorem](https://www.inferentialthinking.com/chapters/14/4/Central_Limit_Theorem.html), the probability distribution of the mean or sum of a large random sample is roughly normal. The bell curve is centered at the population mean. Some of the sample means are higher and some are lower, but the deviations from the population mean are roughly symmetric on either side, as we have seen repeatedly.
+
+In our simulations, we also noticed that the means of larger samples tend to be more tightly clustered around the mean of the distribution we sample from, compared if we had smaller samples. Note that in this lab, the data we have access to and sample from is the population (which we rarely have access to), while when we bootstrap, the distribution we sample from is our original sample.
+
+In this section, we will quantify the [variability of the sample mean](https://www.inferentialthinking.com/chapters/14/5/Variability_of_the_Sample_Mean.html) and develop a relation between the variability and the sample size.
+
+Let's take a look at the salaries of employees of the City of San Francisco in 2014. The mean salary reported by the city government was about \$75,463.92. **Note that in this lab, this dataset is the population.**
+
+*Note: If you get stuck on any part of this lab, please refer to [Chapter 14 of the textbook](https://www.inferentialthinking.com/chapters/14/Why_the_Mean_Matters.html).*
+
+```{r load_salaries}
+salaries <- read.csv('sf_salaries_2014.csv')[, c("salary"), drop = FALSE]
+head(salaries, 5)
+```
+
+```{r salary_mean}
+salary_mean <- mean(salaries$salary)
+cat('Mean salary of San Francisco city employees in 2014:', round(salary_mean, 2), '\n')
+```
+
+```{r salary_histogram}
+# Create histogram with base R
+hist(salaries$salary, breaks = 50, freq = FALSE,
+     main = "2014 salaries of city of SF employees", 
+     xlab = "Salary", ylab = "Density",
+     col = "lightblue", border = "white")
+
+# Add mean line
+abline(v = salary_mean, col = "red", lwd = 2)
+
+# Add legend
+legend("topright", legend = "Mean", col = "red", lwd = 2)
+```
+
+Clearly, the population *does not* follow a normal distribution. Keep that in mind as we progress through these exercises.
+
+Let's take random samples **with replacement** and look at the probability distribution of the sample mean. As usual, we will use simulation to get an empirical approximation to this distribution.
+
+**Question 2.1.** Define a function `one_sample_mean`. Its arguments should be `data` (the data frame), `column` (the name of the column), and `sample_size`(the number of employees in the sample). It should sample with replacement from the data frame and return the mean of the specified column of the sample.
+
+*Note:* The function should reference the arguments and be able to work with any data frame.
+
+```{r q2_1}
+one_sample_mean <- function(data, column, sample_size) {
+
+}
+```
+```{r q2_1_test}
+# Test the function
+set.seed(8)
+test_result <- one_sample_mean(salaries, 'salary', 100)
+cat("Test result:", round(test_result, 0), "\n")
+stopifnot(round(test_result, 0) == 75923)
+```
+
+**Question 2.2.** Use `one_sample_mean` to define a function `simulate_sample_mean`. The arguments are the `data` frame, the `column` name, the `sample_size`, and the number of simulations (`repetitions`).
+
+The function should sample with replacement from the data frame and calculate the mean of each sample. It should save the sample means in a vector called `means`. The remaining code in the function displays an empirical histogram of the sample means.
+
+*Note:* We round all values to 2 decimal places in the provided code because we are working with salaries.
+
+```{r q2_2}
+simulate_sample_mean <- function(data, column, sample_size, repetitions) {
+  
+  means <- c()
+  
+  
+}
+```
+
+Verify with a peer or TA that you've implemented the function above correctly. If you haven't implemented it correctly, the rest of the lab won't work properly, so this step is crucial.
+
+In the following cell, we will create a sample of size 100 from `salaries` and graph it using our new `simulate_sample_mean` function.
+
+*Hint: You should see a distribution similar to something we've been talking about. If not, check your function.*
+
+```{r test_simulate}
+simulate_sample_mean(salaries, 'salary', 100, 10000)
+```
+
+Notice that our distribution of *sample means* looks approximately normal! Did it matter if our original distribution was normally distributed?
+
+**Question 2.3.** Simulate two sample means, one for a sample of 400 salaries and one for a sample of 625 salaries. In each case, perform 10,000 repetitions. Don't worry about the axis limits - they just make sure that all of the plots have the same x-axis and y-axis, respectively.
+
+```{r q2_3}
+simulate_sample_mean(salaries, 'salary', 400, 10000)
+cat('\n\n')
+simulate_sample_mean(salaries, 'salary', 625, 10000)
+```
+
+**Question 2.4.** Assign `q2_4` to a vector of numbers corresponding to true statement(s) about the plots from 2.3.
+
+*Hint*: If a distribution is bell-shaped, what type of curve does it follow?
+
+1.  We see the Central Limit Theorem (CLT) in action because the distributions of the sample means are bell-shaped.
+2.  We see the Law of Averages in action because the distributions of the sample means look like the distribution of the population.
+3.  One of the conditions for CLT is that we have to draw a small random sample with replacement from the population.
+4.  One of the conditions for CLT is that we have to draw a large random sample with replacement from the population.
+5.  One of the conditions for CLT is that the population must be normally distributed.
+
+```{r q2_4}
+q2_4 <- c()
+cat("Answer:", q2_4, "\n")
+```
+
+```{r q2_4_test}
+stopifnot(q2_4 == c(1, 4))
+```
+
+**Question 2.5.** Assign `q2_5` to a vector of numbers corresponding to true statement(s) about the plots from 2.3.
+
+1.  Both plots in 2.3 are roughly centered around the population mean.
+2.  Both plots in 2.3 are roughly centered around the mean of a particular sample.
+3.  The distribution of sample means for sample size 625 has less variability than the distribution of sample means for sample size 400.
+4.  The distribution of sample means for sample size 625 has more variability than the distribution of sample means for sample size 400.
+
+```{r q2_5}
+q2_5 <- c()
+cat("Answer:", q2_5, "\n")
+```
+
+```{r q2_5_test}
+stopifnot(q2_5 == c(1, 3))
+```
+
+Below, we'll look at what happens when we take an **increasing number of resamples of a fixed sample size.** Notice what number in the code changes, and what stays the same. How does the distribution of the resampled means change?
+
+```{r increasing_resamples}
+simulate_sample_mean(salaries, 'salary', 100, 500)
+```
+
+```{r increasing_resamples2}
+simulate_sample_mean(salaries, 'salary', 100, 1000)
+```
+
+```{r increasing_resamples3}
+simulate_sample_mean(salaries, 'salary', 100, 5000)
+```
+
+```{r increasing_resamples4}
+simulate_sample_mean(salaries, 'salary', 100, 10000)
+```
+
+What did you notice about the distributions of sample means in the four histograms above? Discuss with your peers or ask a staff member.
+
+**Question 2.6.** Assign the variable `SD_of_sample_means` to the integer corresponding to your answer to the following question:
+
+When I increase the number of *resamples* that I take, for a *fixed* sample size, the SD of my sample means will...
+
+1.  Increase
+2.  Decrease
+3.  Stay about the same
+4.  Vary widely
+
+```{r q2_6}
+SD_of_sample_means <- 0
+cat("Answer:", SD_of_sample_means, "\n")
+```
+```{r q2_6_test}
+stopifnot(SD_of_sample_means == 3)
+```
+
+**Question 2.7.** Let's think about how the relationships between population SD, sample SD, and SD of sample means change with varying sample size. Which of the following is true? Assign the variable `pop_vs_sample` to a vector of integer(s) that correspond to true statement(s).
+
+*Hint 1:* The sample SD is different from the SD of sample means.
+
+*Hint 2:* [Chapter 14.5](https://inferentialthinking.com/chapters/14/5/Variability_of_the_Sample_Mean.html) might be helpful for answering this question.
+
+1.  Sample SD gets smaller with increasing sample size.
+2.  Sample SD gets larger with increasing sample size.
+3.  Sample SD becomes more consistent with population SD with increasing sample size.
+4.  SD of sample means gets smaller with increasing sample size.
+5.  SD of sample means gets larger with increasing sample size.
+6.  SD of sample means stays the same with increasing sample size.
+
+```{r q2_7}
+pop_vs_sample <- 0 
+cat("Answer:", pop_vs_sample, "\n")
+```
+
+```{r q2_7_test}
+stopifnot(pop_vs_sample == c(3, 4))
+```
+
+**Question 2.8.** Is there a relationship between the sample size and the standard deviation of the sample means? Assign `q2_8` to the number corresponding to the statement that answers this question.
+
+*Hint:* [Chapter 14.5](https://inferentialthinking.com/chapters/14/5/Variability_of_the_Sample_Mean.html) of the textbook may be helpful.
+
+1.  The SD of the sample means is inversely proportional to the square root of sample size.
+2.  The SD of the sample means is directly proportional to the square root of sample size.
+
+```{r q2_8}
+q2_8 <- 0
+cat("Answer:", q2_8, "\n")
+```
+
+```{r q2_8_test}
+stopifnot(q2_8 == 1)
+```
+
+**Throughout this lab, we have been taking many random samples from a population** (in contrast to re-sampling from a sample). However, all of these principles hold for bootstrapped resamples from a single sample. The bootstrap works because it's like drawing from the original population assuming the sample is representative. If your original sample is relatively large, all of your re-samples will also be relatively large, and so the SD of resampled means will be relatively small.
+
+It is also important to keep in mind that when doing the bootstrap, our histogram of resample means will be centered around the **original sample mean**, rather than the population mean (as we don't have access to the population mean usually)!
+
+**In order to change the variability of your sample mean, you'd have to change the size of the original sample from which you are taking bootstrapped resamples.**
+
+------------------------------------------------------------------------
+
+## Done!
+
+<img src="ronny.png" alt="black doggie" width="300"/>
+
+**Ronny** wants to remind you that you're over halfway to the end of the semester! You can do this!
+
+------------------------------------------------------------------------
+
+You're done with lab!
+
+**Important submission information:** 
+  - **Run all the code chunks** and verify that they all work 
+  - **Knit** the document to PDF - **Submit the PDF file** to Gradescope and Brightspace
+
+**It is your responsibility to make sure your work is saved before knitting the document.**
